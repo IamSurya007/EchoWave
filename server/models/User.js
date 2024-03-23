@@ -9,9 +9,16 @@ const userSchema= new mongoose.Schema({
     },
     password:{
         type: String,
-        
         required: true
-    }
+    },
+    name :{
+      type:String,
+      required: true  
+    },
+    // profilePicUrl:{
+    //     type:String,
+    //     required: true
+    // }
 });
 
 // userSchema.pre("save", async function (next) {

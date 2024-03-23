@@ -7,7 +7,7 @@ import Sidebar from "../Components/Sidebar"
 const LandingPage = () => {
   return (
     <div className=" flex bg-orange-100">
-      <Sidebar/>
+      <Sidebar />
       <Posts />
     </div>
   )

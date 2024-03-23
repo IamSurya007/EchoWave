@@ -33,6 +33,13 @@ export const posts=[
         desc:'never ever give up',
         likes:4430,
         comments:888
+    },
+    { 
+        id:6,
+        name:'sajid',
+        desc:'Lord of thunder',
+        likes:420,
+        comments:34
     }
 ]
 
