@@ -9,11 +9,12 @@ export const useLogin = () => {
   const login = async (email, password) => {
     setIsLoading(true)
     setError(null)
-
+    const formdata= new FormData()
+    formdata.append('email', email)
+    formdata.append('password', password)
     const response = await fetch('http://localhost:5000/auth/login', {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ email, password })
+      body: formdata
     })
     const json = await response.json()
 

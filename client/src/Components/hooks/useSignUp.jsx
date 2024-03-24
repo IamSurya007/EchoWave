@@ -10,11 +10,14 @@ export const useSignup = () => {
     setIsLoading(true)
     setError(null)
 
+    const formdata= new FormData();
+    formdata.append('email', email)
+    formdata.append('password', password)
+    formdata.append('name', name)
     // data.append('file', file)
     const response = await fetch('http://localhost:5000/auth/signup', {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({email, password, name})
+      body:formdata
     })
     const json = await response.json()
 
