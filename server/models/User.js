@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import validator from "validator";
 
 const userSchema= new mongoose.Schema({
     email:{
@@ -15,10 +16,13 @@ const userSchema= new mongoose.Schema({
       type:String,
       required: true  
     },
-    // profilePicUrl:{
-    //     type:String,
-    //     required: true
-    // }
+    profilePicUrl:{
+        type:String,
+        validate: {
+            validator: validator.isURL,
+            message: "Invalid URL",
+          },
+    }
 });
 
 // userSchema.pre("save", async function (next) {

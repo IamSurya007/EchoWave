@@ -28,26 +28,15 @@ const registerUser = async (req, res) => {
         if (existingUser) {
             return res.status(400).json({ message: 'User already exists' });
         }
-        console.log(req.files)
-        if(req.files){
-            await uploadFile(req.files, name, email)
+        console.log(req.file)
+        if(req.file){
+            await uploadFile(req.file, name, email)
         }
 
         // Hash the password
-        const hashedPassword = await bcrypt.hash(password, 10);
+            const hashedPassword = await bcrypt.hash(password, 10);
 
-        // Upload profile picture to AWS S3
-        // const s3Params = {
-        //     Bucket: process.env.AWS_BUCKET_NAME,
-        //     Key: `profile_pics/${email}-${Date.now()}-${profilePic.name}`,
-        //     Body: profilePic.data
-        // };
-
-        // s3.upload(s3Params, async (err, data) => {
-        //     if (err) {
-        //         console.error('Error uploading profile picture to S3:', err);
-        //         return res.status(500).json({ message: 'Failed to upload profile picture' });
-        //     }})
+            
 
             // Create a new user with profile picture URL
             const newUser = new User({ email, password: hashedPassword, name });

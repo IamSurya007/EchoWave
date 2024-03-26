@@ -13,10 +13,7 @@ app.use(cors({
   origin:process.env.CLIENT_URL,
   credentials:true,
 }))
-const storage= multer.memoryStorage();;
-const upload= multer({storage: storage})
 
-app.use(upload.any())
 app.use(bodyParser.json())
 app.use('/auth', authRoutes)
 

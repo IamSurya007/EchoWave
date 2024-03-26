@@ -18,7 +18,6 @@ export const uploadFile = async (file, name, email)=>{
             Body: file.buffer,
             ContentType: file.mimetype
         };
-
         const command= new PutObjectCommand(s3Params)
         await s3Client.send(command)
     }catch(err){
