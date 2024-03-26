@@ -4,12 +4,13 @@ import bcrypt from 'bcrypt'
 import User from '../models/User.js'
 import validator from 'validator'
 import dotenv from 'dotenv'
+import { uploadFile } from '../s3.js';
 
 dotenv.config()
 
-
 const registerUser = async (req, res) => {
     const { email, password, name } = req.body;
+    console.log(req.body)
     try {
         // Validation
         if (!email || !password || !name) {
@@ -26,6 +27,10 @@ const registerUser = async (req, res) => {
         const existingUser = await User.findOne({ email });
         if (existingUser) {
             return res.status(400).json({ message: 'User already exists' });
+        }
+        console.log(req.files)
+        if(req.files){
+            await uploadFile(req.files, name, email)
         }
 
         // Hash the password
@@ -46,6 +51,7 @@ const registerUser = async (req, res) => {
 
             // Create a new user with profile picture URL
             const newUser = new User({ email, password: hashedPassword, name });
+
             await newUser.save();
 
             // Generate JWT token
@@ -70,7 +76,6 @@ const registerUser = async (req, res) => {
 const loginUser = async (req,res)=>{
     try{
         const {email, password}= req.body;
-        console.log(req.body)
         //find user by email
         const user =await User.findOne({email});
         if(!user){

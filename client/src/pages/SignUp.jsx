@@ -16,21 +16,28 @@ export default function Signup() {
     email:'',
     password:'',
     name:'',
+    file:'null'
   });
   const {signup, isLoading, error} = useSignup()
 
 
   const handleChange = async (e)=>{
-    const {name, value} = e.target;
+    const {name, value, files} = e.target;
+    if(name === 'image'){
+      setFormData((prevData)=>({
+       ...prevData,
+        file:files[0]
+      }))
+    }else {
       setFormData((prevData)=>({
         ...prevData,
         [name]:value,
-      }))
+      }))}
     }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await signup(formData.email, formData.password, formData.name)
+    await signup(formData.email, formData.password, formData.name, formData.file)
     navigate('/');
   };
   
@@ -45,7 +52,7 @@ export default function Signup() {
         <Input name="password" type="password"   value={formData.password} onChange={handleChange} placeholder="enter the password" />
         <div className="grid w-full max-w-sm items-center gap-1.5">
       <Label htmlFor="picture">User Icon</Label>
-      <Input id="picture" name="image" type="file" accept="image/*" />
+      <Input id="picture" name="image" onChange={handleChange} type="file" accept="image/*" />
     </div>
         <div className=" flex justify-center">
         <Button className=" w-24 rounded-md hover:bg-gray-700" disabled={isLoading} onClick={handleSubmit}>Signup</Button>

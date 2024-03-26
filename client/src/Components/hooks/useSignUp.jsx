@@ -6,7 +6,7 @@ export const useSignup = () => {
   const [isLoading, setIsLoading] = useState(null)
   const { dispatch } = useAuthContext()
 
-  const signup = async (email, password, name) => {
+  const signup = async (email, password, name, file) => {
     setIsLoading(true)
     setError(null)
 
@@ -14,7 +14,7 @@ export const useSignup = () => {
     formdata.append('email', email)
     formdata.append('password', password)
     formdata.append('name', name)
-    // data.append('file', file)
+    formdata.append('file', file)
     const response = await fetch('http://localhost:5000/auth/signup', {
       method: 'POST',
       body:formdata
