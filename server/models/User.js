@@ -16,7 +16,7 @@ const userSchema= new mongoose.Schema({
       type:String,
       required: true  
     },
-    profilePicUrl:{
+    userIcon:{
         type:String,
         validate: {
             validator: validator.isURL,

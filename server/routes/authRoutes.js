@@ -16,6 +16,6 @@ const router= express.Router();
 router.post('/signup', upload.single("file"), registerUser)
 
 //login
-router.post('/login', loginUser)
+router.post('/login',upload.any(), loginUser)
 
 export default router; 

@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv'
 import authRoutes from './routes/authRoutes.js'
-import multer from 'multer';
+import searchRoutes from './routes/searchRoutes.js'
 
 dotenv.config()
 
@@ -16,6 +16,7 @@ app.use(cors({
 
 app.use(bodyParser.json())
 app.use('/auth', authRoutes)
+app.use('/search', searchRoutes)
 
 mongoose.connect(process.env.MONGODB_URI)
 .then(() => {

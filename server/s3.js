@@ -14,7 +14,7 @@ export const uploadFile = async (file, name, email)=>{
         try{
             const s3Params = {
             Bucket: process.env.AWS_BUCKET_NAME,
-            Key: `profile_pics/${name}-${Date.now()}`,
+            Key: `${name}/userIcons/${file.originalname}`,
             Body: file.buffer,
             ContentType: file.mimetype
         };

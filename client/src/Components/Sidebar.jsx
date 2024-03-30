@@ -14,12 +14,13 @@ const Sidebar = () => {
     logout()
   }
   console.log(user?.name)
+  console.log(user?.avatar)
   
   return (
     <div className="hidden lg:block sm:w-1/5 h-screen fixed bg-orange-100 ml-10">
   <ul className="list-none flex flex-col space-y-1">
-    {user && <li className="p-3 pl-10 font-bold bg-orange-200 hover:bg-orange-400 hover:rounded-md hover:cursor-pointer flex items-center gap-3">
-      {user?.name}
+    {user && <li className="p-3  font-bold bg-orange-200 hover:bg-orange-400 hover:rounded-md hover:cursor-pointer flex items-center gap-3">
+     <img className=" size-10 rounded-full object-cover" src={user?.avatar} alt="img"/> {user?.name}
     </li>}
     <li className="p-3 pl-3 font-bold bg-orange-200 hover:bg-orange-400 hover:rounded-md hover:cursor-pointer flex items-center gap-3">
       <LuHome className="text-xl"/>Home
