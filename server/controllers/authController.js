@@ -79,7 +79,7 @@ const loginUser = async (req,res)=>{
         //compare passwords
         const passwordMatch= await bcrypt.compare(password, user.password)
         if(!passwordMatch){
-            return res.status(401).json({mesaage: "password does not match"});
+            return res.status(401).json({message: "password does not match"});
         }
         //generate JWT token
         const token = jwt.sign({userId: user._id},process.env.JWT_SECRET, {expiresIn:'1h'});

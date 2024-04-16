@@ -1,8 +1,7 @@
 import User from '../models/User.js';
 
 const searchUsers = async (req, res) => {
-    const query = req.query.q; 
-    console.log(query)
+    const query = req.query.q;
     // Get search query from request query parameters
     try {
         const users = await User.find({ 

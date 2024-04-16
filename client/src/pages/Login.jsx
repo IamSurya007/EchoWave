@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { useLogin } from "@/Components/hooks/useLogin";
-import { useNavigate } from "react-router-dom";
 
 export default function Login() {
 
@@ -10,8 +9,7 @@ export default function Login() {
     email:'',
     password:''
   });
-  const {login} = useLogin()
-  const navigate= useNavigate()
+  const {isLoading , error,login} = useLogin()
   const handleChange = async (e)=>{
     const {name, value} = e.target;
     setFormData((prevData)=>({
@@ -23,7 +21,7 @@ export default function Login() {
   const handleSubmit = async (e)=>{
     e.preventDefault()
     await login(formData.email, formData.password)
-    navigate('/');
+    console.log(error)
   }
     return (
       <div  className="flex justify-center items-center h-screen bg-slate-300">
@@ -33,8 +31,9 @@ export default function Login() {
         </div>
         <Input name="email"  value={formData.email} onChange={handleChange} placeholder="enter the email"/>
         <Input name="password" type="password" value={formData.password} onChange={handleChange} placeholder="enter the password" />
+        {error && <div className=" pl-2 text-red-600 font-bold">{error}</div>}
         <div className=" flex justify-center">
-        <Button className=" w-24 rounded-md hover:bg-gray-700" onClick={handleSubmit}>Login</Button>
+        <Button className=" w-24 rounded-md hover:bg-gray-700" disabled={isLoading} onClick={handleSubmit}>Login</Button>
         </div>
         <div className=" flex gap-6">
         <label className=" text-gray-700 ">

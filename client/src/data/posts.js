@@ -36,10 +36,10 @@ export const posts=[
     },
     { 
         id:6,
-        name:'sajid',
+        name:'chandu',
         desc:'Lord of thunder',
-        likes:420,
+        likes:3933,
         comments:34
-    }
+    },
+    
 ]
-

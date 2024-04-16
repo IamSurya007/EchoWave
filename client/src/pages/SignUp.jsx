@@ -5,12 +5,9 @@ import { useSignup } from "@/Components/hooks/useSignUp";
 // import { MdOutlineVisibility } from "react-icons/md";
 // import { MdOutlineVisibilityOff } from "react-icons/md";
 import { Label } from "@/Components/ui/label";
-import { useNavigate } from "react-router-dom";
 
 
 export default function Signup() {
-
-  const navigate = useNavigate()
 
   const [formData, setFormData]= useState({
     email:'',
@@ -38,7 +35,7 @@ export default function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await signup(formData.email, formData.password, formData.name, formData.file)
-    navigate('/');
+    
   };
   
     return (
@@ -54,6 +51,7 @@ export default function Signup() {
       <Label htmlFor="picture">User Icon</Label>
       <Input id="picture" name="image" onChange={handleChange} type="file" accept="image/*" />
     </div>
+    {error && <div className=" pl-2 text-red-500 font-bold">{error}</div>}
         <div className=" flex justify-center">
         <Button className=" w-24 rounded-md hover:bg-gray-700" disabled={isLoading} onClick={handleSubmit}>Signup</Button>
         </div>
@@ -63,7 +61,7 @@ export default function Signup() {
         </label>
         <a href="/auth/login" >Login</a>
         </div>
-        {error && <div>{error}</div>}
+        
       </div>
       </div>
     );

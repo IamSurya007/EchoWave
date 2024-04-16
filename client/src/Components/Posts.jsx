@@ -3,7 +3,8 @@ import PostCard from "./PostCard"
 
 const Posts = () => {
   return (
-    <div className="bg-orange-200 sm:w-1/3 rounded-md mx-auto" >
+    <div className=" sm:w-1/3 rounded-md mx-auto" >
+     
         {posts.map((post, index)=>{
           return <PostCard key={index} post={post} />
         })}
