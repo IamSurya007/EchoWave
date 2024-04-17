@@ -41,9 +41,9 @@ const Sidebar = () => {
   return (
     <div className=" sm:w-1/5 h-screen border-r fixed shadow-2xl mt-7 ml-10">
       {serachVisible && (
-        <div className=" flex flex-col">
+        <div className=" flex flex-col rounded-sm">
           <div className=" flex-col fixed top-0 left-0 w-full mt-3 bg-opacity-50 flex justify-center items-center">
-          <div className="bg-white bg-opacity-90 p-2 w-1/3  rounded-lg shadow-lg flex items-center">
+          <div className="bg-white bg-opacity-90 p-2 w-1/3  shadow-lg flex items-center">
           <IoIosArrowBack onClick={toggleSearch} className=" text-black hover:cursor-pointer" />
             <input
               type="text"
@@ -53,11 +53,13 @@ const Sidebar = () => {
               placeholder= "Search..."
             />
           </div>
-          <ul className=" flex flex-col bg-white bg-opacity-70 rounded-sm w-1/3 ">
+          <ul className=" flex flex-col bg-white bg-opacity-90 text-black w-1/3 ">
                 {searchResults.map((user, index) => (
-                    <li className=" mt-1 font-medium flex items-center space-x-2 hover:cursor-pointer hover:bg-slate-400 hover:rounded-md " key={index}>
+                    <li  key={index}>
+                      <Link className=" mt-1 font-medium flex items-center space-x-2 hover:cursor-pointer hover:bg-slate-400 hover:rounded-md " to={`/${user.name}`}>
                       <img className=" size-12 rounded-full object-cover" src={user.userIcon} alt="Profile" />
                       <div> {user.name}</div>
+                      </Link>
                     </li>
                 ))}
             </ul>
@@ -67,7 +69,7 @@ const Sidebar = () => {
       <ul className="list-none flex flex-col space-y-1">
         {user && (
           <li className="">
-            <Link className="p-3 font-bold bg-white-200 hover:bg-slate-400 hover:rounded-md hover:cursor-pointer flex items-center gap-3" to="/user">
+            <Link className="p-3 font-bold bg-white-200 hover:bg-slate-400 hover:rounded-md hover:cursor-pointer flex items-center gap-3" to={`/${user.name}`}>
             <img
               className=" size-10 rounded-full object-cover"
               src={user?.avatar}

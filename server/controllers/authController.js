@@ -53,7 +53,7 @@ const registerUser = async (req, res) => {
             // Respond with user details and token
             res.status(201).json({
                 email: newUser.email,
-                name: newUser.name ,
+                name: newUser.name,
                 token,
                 message: 'User registered successfully',
                 avatar: userIcon
