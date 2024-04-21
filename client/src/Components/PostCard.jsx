@@ -1,5 +1,4 @@
 /* eslint-disable react/prop-types */
-import profile from '../assets/profile.jpg';
 import { LuSend, LuHeart } from "react-icons/lu";
 import { PiDotsThreeVertical } from "react-icons/pi";
 import { FaRegComment } from "react-icons/fa";
@@ -10,19 +9,19 @@ const PostCard = ({ post }) => {
     <div className=' pt-3 border-2 rounded-md'>
         <div className=' flex items-center space-x-4 h-12 pb-3'>
             <div className=' ml-5'>
-             <img src={profile} alt="profile" className=' rounded-full h-12 w-12 '/>
+             <img src={post.user.userIcon} alt="profile" className=' object-cover rounded-full h-12 w-12 '/>
             </div>
-        <div className=' font-semibold text-lg w-3/4'>{post.name}</div>
+        <div className=' font-semibold text-lg w-3/4'>{post.user.name}</div>
         <div className=' pr-3'>
         <PiDotsThreeVertical className=' text-2xl ' />
         </div>
         </div>
-        <div>
-          <img src={profile} alt="post" className=' object-cover'/>
+        <div className=' flex justify-center'>
+          <img src={post.fileUrl} alt="post" className=' object-cover'/>
         </div>
         <div className=' pt-2'>
         <span className=' font-medium ml-3'>{post.name}</span>
-        <span className=' ml-2'>{post.desc}</span>
+        <span className=' ml-2'>{post.description}</span>
         </div>
         <div className=' flex space-x-5 ml-3 pt-2 items-center'>
           <LuHeart className=' text-3xl'/>

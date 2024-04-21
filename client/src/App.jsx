@@ -5,7 +5,6 @@ import Login from './pages/Login';
 import LandingPage from './pages/LandingPage';
 import { ThemeProvider } from './Components/theme-provider';
 import UserProfile from './pages/userProfile';
-import Profile from './pages/Profile';
 
 function App() {
 
@@ -19,7 +18,7 @@ function App() {
             <Route path='login' element={ <Login/>}/>
             <Route path='signup' element={ <Signup/>}/> 
           </Route>
-          <Route path='/user' element={<Profile/>}/>
+          
           <Route path='/:username' element={<UserProfile/>}/>
         </Routes>
       </Router>

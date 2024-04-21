@@ -34,31 +34,26 @@ const registerUser = async (req, res) => {
         }
         console.log(req.file)
         if(req.file){
-            await uploadFile(req.file, name, email)
+            await uploadFile(req.file, name, "userIcons")
             console.log(req.file.originalname)
+            const userIcon = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/${name}/userIcons/${req.file.originalname}`
+            req.body.userIcon = userIcon
         }
 
         // Hash the password
             const hashedPassword = await bcrypt.hash(password, 10);
-
-            const userIcon = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/${name}/userIcons/${req.file.originalname}`
+            req.body.password = hashedPassword;
             // Create a new user with profile picture URL
-            const newUser = new User({ email, password: hashedPassword, name, userIcon: userIcon});
+            const newUser = new User(req.body);
 
             await newUser.save();
 
             // Generate JWT token
             const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
+            const createdUser = await User.findById(newUser._id).select("-password");
             // Respond with user details and token
-            res.status(201).json({
-                email: newUser.email,
-                name: newUser.name,
-                token,
-                message: 'User registered successfully',
-                avatar: userIcon
-            });
-        
+            res.status(200).json(createdUser);
 
     } catch (error) {
         console.error('Error registering user:', error);
@@ -72,6 +67,9 @@ const loginUser = async (req,res)=>{
         //find user by email
         console.log(req.body)
         const user =await User.findOne({email});
+        if(!email || !password) {
+            return res.status(400).json({message:"all fields are required"})
+        }
         if(!user){
             return res.status(401).json({message:"credentials invalid"})
         }
@@ -84,7 +82,7 @@ const loginUser = async (req,res)=>{
         //generate JWT token
         const token = jwt.sign({userId: user._id},process.env.JWT_SECRET, {expiresIn:'1h'});
 
-        res.status(200).json({token:token,email:user.email, name:user.name, avatar: user.userIcon,messsage: "user logged in"})
+        res.status(200).json({token:token,email:user.email, name:user.name, userIcon: user.userIcon,messsage: "user logged in"})
     }
     catch(error){
         console.error(error);

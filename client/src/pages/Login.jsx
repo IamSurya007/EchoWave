@@ -21,7 +21,7 @@ export default function Login() {
   const handleSubmit = async (e)=>{
     e.preventDefault()
     await login(formData.email, formData.password)
-    console.log(error)
+    console.log("error:", error)
   }
     return (
       <div  className="flex justify-center items-center h-screen bg-slate-300">

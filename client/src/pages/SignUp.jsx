@@ -49,7 +49,7 @@ export default function Signup() {
         <Input name="password" type="password"   value={formData.password} onChange={handleChange} placeholder="enter the password" />
         <div className="grid w-full max-w-sm items-center gap-1.5">
       <Label htmlFor="picture">User Icon</Label>
-      <Input id="picture" name="image" onChange={handleChange} type="file" accept="image/*" />
+      <Input id="picture" name="image" className=" " onChange={handleChange} type="file" accept="image/*" />
     </div>
     {error && <div className=" pl-2 text-red-500 font-bold">{error}</div>}
         <div className=" flex justify-center">

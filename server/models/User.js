@@ -18,10 +18,7 @@ const userSchema= new mongoose.Schema({
     },
     userIcon:{
         type:String,
-        validate: {
-            validator: validator.isURL,
-            message: "Invalid URL",
-          },
+        default:"https://echowave-uploads.s3.amazonaws.com/profile.png"
     }
 });
 

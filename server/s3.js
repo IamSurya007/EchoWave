@@ -10,11 +10,11 @@ const s3Client = new S3Client({
     },
 });
 
-export const uploadFile = async (file, name, email)=>{
+export const uploadFile = async (file, name, folderName)=>{
         try{
             const s3Params = {
             Bucket: process.env.AWS_BUCKET_NAME,
-            Key: `${name}/userIcons/${file.originalname}`,
+            Key: `${name}/${folderName}/${file.originalname}`,
             Body: file.buffer,
             ContentType: file.mimetype
         };

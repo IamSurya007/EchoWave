@@ -5,11 +5,13 @@ import { PiNotification, PiSignIn } from "react-icons/pi";
 import { PiSignOut } from "react-icons/pi";
 import { useLogout } from "./hooks/UseLogout";
 import { useAuthContext } from "./hooks/UseAuthContext";
-import { useState } from "react";
-import axios from "axios";
+import { useEffect, useState } from "react";
+import axios from "@/utils/api.js"
 import { IoIosArrowBack } from "react-icons/io";
 import { ModeToggle } from "./mode-toggle";
 import { Link } from "react-router-dom";
+import DialogDemo from "./DialogMemo";
+import logo from '../assets/logo.png'
 
 const Sidebar = () => {
   const { logout } = useLogout();
@@ -17,13 +19,15 @@ const Sidebar = () => {
   const [query, setQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
 
+  
+
 
   const handleChange = async (e) => {
     const value = e.target.value.trim();
     setQuery(value);
     if(value != ''){
       try {
-        const response = await axios.get(`http://localhost:5000/search?q=${value}`);
+        const response = await axios.get(`/search?q=${value}`);
         setSearchResults(response.data);
       } catch (error) {
         console.error(error);
@@ -39,7 +43,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className=" sm:w-1/5 h-screen border-r fixed shadow-2xl mt-7 ml-10">
+    <div className=" sm:w-1/6 h-screen border-r fixed shadow-2xl mt-7 ml-10">
       {serachVisible && (
         <div className=" flex flex-col rounded-sm">
           <div className=" flex-col fixed top-0 left-0 w-full mt-3 bg-opacity-50 flex justify-center items-center">
@@ -66,13 +70,17 @@ const Sidebar = () => {
         </div>
         </div>
       )}
+      <div className=" p-2 font-bold bg-white-200 hover:bg-slate-400 hover:rounded-md hover:cursor-pointer flex items-center" >
+          <img className=" size-12 rounded-full object-cover" src={logo} alt="logo"/>
+          <div>Echowave</div>
+        </div>
       <ul className="list-none flex flex-col space-y-1">
         {user && (
           <li className="">
             <Link className="p-3 font-bold bg-white-200 hover:bg-slate-400 hover:rounded-md hover:cursor-pointer flex items-center gap-3" to={`/${user.name}`}>
             <img
               className=" size-10 rounded-full object-cover"
-              src={user?.avatar}
+              src={user?.userIcon}
               alt="img"
             />{" "}
             {user?.name}
@@ -101,7 +109,10 @@ const Sidebar = () => {
           Notifications
         </li>
         <li className=" p-1 rounded-sm font-bold hover:bg-slate-400 hover:cursor-pointer">
-          <ModeToggle />Theme
+          <ModeToggle /> Theme
+        </li>
+        <li className=" pt-2">
+          <DialogDemo/>
         </li>
       </ul>
       {!user && (
