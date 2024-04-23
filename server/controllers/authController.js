@@ -49,7 +49,7 @@ const registerUser = async (req, res) => {
             await newUser.save();
 
             // Generate JWT token
-            const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+            const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
 
             const createdUser = await User.findById(newUser._id).select("-password");
             // Respond with user details and token
@@ -82,7 +82,7 @@ const loginUser = async (req,res)=>{
         //generate JWT token
         const token = jwt.sign({userId: user._id},process.env.JWT_SECRET, {expiresIn:'1h'});
 
-        res.status(200).json({token:token,email:user.email, name:user.name, userIcon: user.userIcon,messsage: "user logged in"})
+        res.status(200).json({token:token,email:user.email, name:user.name,userId:user._id, userIcon: user.userIcon,messsage: "user logged in"})
     }
     catch(error){
         console.error(error);

@@ -1,7 +1,7 @@
-
 import PostCard from "./PostCard"
 import { useEffect, useState } from "react"
 import axios from "@/utils/api.js"
+
 
 const Posts = () => {
 
@@ -21,8 +21,7 @@ const Posts = () => {
   console.log(posts)
   return (
     <div className=" sm:w-1/3 rounded-md mx-auto mt-20" >
-     
-        {posts.map((post, index)=>{
+        {posts.sort((a,b)=> new Date(b.createdAt)- new Date(a.createdAt)).map((post, index)=>{
           return <PostCard key={index} post={post} />
         })}
     </div>

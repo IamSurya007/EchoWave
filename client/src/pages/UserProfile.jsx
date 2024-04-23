@@ -2,23 +2,30 @@ import Layout from "@/Components/Layout.jsx";
 import PostCard from "@/Components/PostCard";
 import { Button } from "@/Components/ui/button";
 import axios from '@/utils/api.js'
-import { useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 // import { useAuthContext } from "../Components/hooks/UseAuthContext.jsx";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { useAuthContext } from "@/Components/hooks/UseAuthContext";
 
 const UserProfile = () => {
-
+    const {user} = useAuthContext()
     const {username} = useParams()
     const [profile, setProfile] = useState("")
     const [posts, setPosts] = useState([])
-    // const {user} = useAuthContext();
+    const [isFollowing, setIsFollowing] = useState(false)
+
+    
     useEffect(()=>{
       const fetchUser = async () => {
         try{
-          const res = await axios.post(`/user/${username}`, {username});
+          const res = await axios.post(`/user/${username}`, {username},
+          {headers:{
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+          }});
           setProfile(res.data.user)
           setPosts(res.data.posts)
           console.log("response", res.data)
+          
         }
         catch(err){
           console.log(err)
@@ -26,8 +33,27 @@ const UserProfile = () => {
       }
       fetchUser();
     },[username])
-  
-
+    useEffect(()=>{
+      if(profile?.followers?.includes(user?.userId)){
+        setIsFollowing(true)
+        console.log("following")
+      }
+    },[profile])
+    const handleFollow= async()=>{
+      try{
+        const res = await axios.post(`/user/${username}/follow`, {username},
+        {
+          headers:{
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+          }
+        }
+      )
+        setIsFollowing(true)
+        console.log(res.data)
+      }catch(e){
+        console.log(e)
+      }
+    }
   return (
       <Layout>
         <div className=" flex  justify-center mt-20">
@@ -35,20 +61,21 @@ const UserProfile = () => {
             <div className=" flex flex-col ">
             <div className=" font-medium  mt-5 ml-10">
             {profile?.name}
-            <Button className=" bg-blue-600 ml-10 hover:bg-blue-500  ">Follow</Button>
-            <Button className=" ml-5 ">Message</Button>
+            <Button onClick={handleFollow} className={`bg-blue-600 ml-10 hover:bg-blue-500 ${isFollowing ? 'hidden': ''}`}>Follow</Button>
+            <Button  className={`ml-10 bg-green-600 border-b hover:bg-green-500 ${isFollowing ? '': 'hidden'}`}>Following</Button>
+          <Link to={`/direct/t/${profile._id}`} className=" ml-5">Message</Link>
             </div>
             <div className=" mt-5 flex ml-10 gap-x-8 font-sans">
-              <h1>721 posts</h1>
-              <h1>22 followers</h1>
-              <h1>22 following</h1>
+              <h1>{posts.length} posts</h1>
+              <h1>{profile?.followers?.length} followers</h1>
+              <h1>{profile?.following?.length} following</h1>
             </div>
             <div className=" ml-10 mt-4 font-serif">{profile?.name}</div>
             </div>
       </div>
       <div className=" sm:w-1/3 rounded-md mx-auto mt-10 grid " >
      
-        {posts.map((post, index)=>{
+        {posts.sort((a, b)=> (new Date(b.createdAt)- new Date(a.createdAt))).map((post, index)=>{
           return <PostCard key={index} post={post} />
         })}
     </div>

@@ -2,22 +2,54 @@
 import { LuSend, LuHeart } from "react-icons/lu";
 import { PiDotsThreeVertical } from "react-icons/pi";
 import { FaRegComment } from "react-icons/fa";
-
+import { formatDistanceToNow } from "date-fns";
+import { Link } from "react-router-dom";
 
 const PostCard = ({ post }) => {
+  var time= formatDistanceToNow(new Date(new Date(post.createdAt)), { addSuffix: false,includeSeconds: true})
+  const customTime = ()=>{
+    if(time.startsWith("about")) time= time.slice(6)
+    if(time.startsWith('less')) time = time.slice(10)
+    if(time.includes('year')) time = time[0] +"y"
+    if(time.includes('month')) {
+      time= time.substring(0,2)+ "h";
+      time= time.replace(/\s+/, "")
+  }
+    if(time.includes('day')) {
+      time= time.substring(0,2)+ "d";
+      time= time.replace(/\s+/, "")
+  }
+    if(time.includes('hour')) {
+      time= time.substring(0,2)+ "h";
+      time= time.replace(/\s+/, "")
+  }
+    if (time.includes('minute')) {
+      time= time.substring(0,2)+ "m";
+      time= time.replace(/\s+/, "")
+  }
+    if (time.includes('second')) {
+      time= time.substring(0,2)+ "s";
+      time= time.replace(/\s+/, "")
+  }
+  }
+  customTime()
+
   return (
     <div className=' pt-3 border-2 rounded-md'>
         <div className=' flex items-center space-x-4 h-12 pb-3'>
             <div className=' ml-5'>
              <img src={post.user.userIcon} alt="profile" className=' object-cover rounded-full h-12 w-12 '/>
             </div>
-        <div className=' font-semibold text-lg w-3/4'>{post.user.name}</div>
+        <Link to= {`/${post.user.name}`} className=' w-3/4'>
+          <span className=" font-semibold text-lg">{post.user.name}</span>
+          <span className=" ml-3 font-light">{time}</span>
+        </Link>
         <div className=' pr-3'>
-        <PiDotsThreeVertical className=' text-2xl ' />
+        <PiDotsThreeVertical className=' text-2xl' />
         </div>
         </div>
-        <div className=' flex justify-center'>
-          <img src={post.fileUrl} alt="post" className=' object-cover'/>
+        <div className=' flex justify-center  '>
+          <img src={post.fileUrl} alt="post" className=' max-h-[calc(3/4*96vh)] object-cover'/>
         </div>
         <div className=' pt-2'>
         <span className=' font-medium ml-3'>{post.name}</span>

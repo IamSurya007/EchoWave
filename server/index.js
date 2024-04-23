@@ -7,10 +7,12 @@ import authRoutes from './routes/authRoutes.js'
 import searchRoutes from './routes/searchRoutes.js'
 import userRoutes from './routes/userRoutes.js'
 import postRoutes from './routes/postRoutes.js'
+import http from 'http'
 
 dotenv.config()
 
 const app = express();
+const server = http.createServer(app)
 app.use(cors({
   origin:process.env.CLIENT_URL,
   credentials:true,
@@ -39,7 +41,7 @@ mongoose.connect(process.env.MONGODB_URI)
 .then(() => {
     // listen for requests
     const PORT=process.env.PORT || 5000
-    app.listen(PORT, () => {
+    server.listen(PORT, () => {
       console.log(`connected to db & listening on port ${PORT}`);
     })
   })

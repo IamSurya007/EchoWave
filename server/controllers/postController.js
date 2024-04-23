@@ -40,7 +40,7 @@ export const createPost = async (req, res) => {
     fileUrl: req.body.fileUrl,
   });
     const newPost = await post.save();
-    res.status(201).json(newPost);
+    res.status(201).json({newPost, message:" Uploaded successfully"});
   } catch (err) {
     res.status(400).json({ errmessage: err.message });
   }

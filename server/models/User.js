@@ -19,15 +19,10 @@ const userSchema= new mongoose.Schema({
     userIcon:{
         type:String,
         default:"https://echowave-uploads.s3.amazonaws.com/profile.png"
-    }
+    },
+    followers:[{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
+    following:[{type:mongoose.Schema.Types.ObjectId, ref: 'User'}]
 });
 
-// userSchema.pre("save", async function (next) {
-//     const user = this;
-//     if (user.isModified("password")) {
-//       user.password = await bcrypt.hash(user.password, 10);
-//     }
-//     next();
-//   });
 const User = mongoose.model('User', userSchema)
 export default User;

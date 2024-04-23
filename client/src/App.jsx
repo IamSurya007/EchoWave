@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import LandingPage from './pages/LandingPage';
 import { ThemeProvider } from './Components/theme-provider';
 import UserProfile from './pages/userProfile';
+import Chat from './pages/Chat';
 
 function App() {
 
@@ -17,9 +18,9 @@ function App() {
           <Route path='/auth'>
             <Route path='login' element={ <Login/>}/>
             <Route path='signup' element={ <Signup/>}/> 
-          </Route>
-          
+          </Route>     
           <Route path='/:username' element={<UserProfile/>}/>
+          <Route path= '/direct/t/:username' element={<Chat/>}/>
         </Routes>
       </Router>
       </ThemeProvider>
