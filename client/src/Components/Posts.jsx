@@ -20,7 +20,7 @@ const Posts = () => {
   },[])
   console.log(posts)
   return (
-    <div className=" sm:w-1/3 rounded-md mx-auto mt-20" >
+    <div className=" md:w-1/3 rounded-md mx-auto" >
         {posts.sort((a,b)=> new Date(b.createdAt)- new Date(a.createdAt)).map((post, index)=>{
           return <PostCard key={index} post={post} />
         })}

@@ -40,7 +40,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className=" sm:w-1/6 h-screen border-r fixed shadow-2xl mt-7 ml-10">
+    <div className="h-screen border-r fixed shadow-2xl mt-7 ml-10 hidden md:block md:w-1/6 ">
       {serachVisible && (
         <div className=" flex flex-col rounded-sm">
           <div className=" flex-col fixed top-0 left-0 w-full mt-3 bg-opacity-50 flex justify-center items-center">
@@ -69,14 +69,15 @@ const Sidebar = () => {
       )}
       <div className=" p-2 font-bold bg-white-200 hover:bg-slate-400 hover:rounded-md hover:cursor-pointer flex items-center" >
           <img className=" size-12 rounded-full object-cover" src={logo} alt="logo"/>
-          <div>Echowave</div>
+          <span className=" hidden lg:block">Echowave</span>
         </div>
       <ul className="list-none flex flex-col space-y-1">
         
         <li className="">
           <Link to="/" className="p-3 pl-3 font-bold  hover:bg-slate-400 hover:rounded-md hover:cursor-pointer flex items-center gap-3">
           <LuHome className=" text-xl" />
-          Home
+          
+          <span className=" hidden lg:block">Home</span>
           </Link>
         </li>
         <li
@@ -84,18 +85,21 @@ const Sidebar = () => {
           className="p-3 pl-3 font-bold bg-white-200 hover:bg-slate-400 hover:rounded-md hover:cursor-pointer flex items-center gap-3"
         >
           <LuSearch className="text-xl" />
-          Search
+          
+          <span className=" hidden lg:block">Search</span>
         </li>
         <li className="p-3 pl-3 font-bold bg-white-200 hover:bg-slate-400 hover:rounded-md hover:cursor-pointer flex items-center gap-3">
           <LuMessageSquare className="text-xl" />
-          Messages
+          
+          <span className=" hidden lg:block">Messages</span>
         </li>
         <li className="p-3 pl-3 font-bold bg-white-200 hover:bg-slate-400 hover:rounded-md hover:cursor-pointer flex items-center gap-3">
           <PiNotification className="text-xl" />
-          Notifications
+          <span className=" hidden lg:block">Notifications</span>
         </li>
-        <li className=" p-1 rounded-sm font-bold hover:bg-slate-400 hover:cursor-pointer">
-          <ModeToggle /> Theme
+        <li className=" p-1 flex items-center rounded-sm font-bold hover:bg-slate-400 hover:cursor-pointer">
+          <ModeToggle /> 
+          <span className=" hidden lg:block">Theme</span>
         </li>
         <li className=" pt-2">
           <DialogDemo/>
@@ -107,7 +111,8 @@ const Sidebar = () => {
           className="p-3 pl-3 font-bold flex gap-2 items-center bg-white-200 hover:bg-slate-400 hover:rounded-md hover:cursor-pointer mt-24 "
         >
           <PiSignIn className="text-xl" />
-          Login
+          
+          <span className=" hidden lg:block">Login</span>
         </a>
       )}
       {/* <div className=" mt-3 p-1.5 font-bold bg-white-200">
@@ -116,13 +121,14 @@ const Sidebar = () => {
       {user && (
         <ul className=" mt-32 space-y-1">
           <li className="">
-            <Link className="p-3 font-bold bg-white-200 hover:bg-slate-400 hover:rounded-md hover:cursor-pointer flex items-center gap-3" to={`/${user.name}`}>
+            <Link className="p-3 font-bold bg-white-200 hover:bg-slate-400 hover:rounded-md hover:cursor-pointer flex items-center gap-3" to={`/${user?.name}`}>
             <img
               className=" size-10 rounded-full object-cover"
               src={user?.userIcon}
               alt="img"
             />{" "}
-            {user?.name}
+            
+            <span className=" hidden lg:block">{user?.name}</span>
             </Link>
           </li>
           <li
@@ -130,7 +136,8 @@ const Sidebar = () => {
             className="p-3 pl-3 font-bold bg-white-200 hover:bg-slate-400 hover:rounded-md hover:cursor-pointer flex items-center gap-3"
           >
             <PiSignOut className="text-xl" />
-            Logout
+            
+            <span className=" hidden lg:block">Logout</span>
           </li>
         </ul>
       )}

@@ -67,6 +67,19 @@ export const updatePost = async (req, res) => {
     res.status(400).json({ message: err.message });
   }
 };
+export const likePost = async(req, res)=>{
+  const post = req.body.post;
+  if(!post){
+    res.status(404).json({ message:" post not found" });
+  }
+  const user = await User.findById(req.user.userId);
+   if(!user){
+    res.status(404).json({ message:" user not found" });
+   }
+   await Post.findByIdAndUpdate(post._id, {$addToSet: {likedBy: user._id}});
+   const updatedPost = await Post.findById(post._id);
+   res.status(200).json({message:"liked the post", updatedPost});
+}
 
 export const deletePost = async (req, res) => {
   try {
