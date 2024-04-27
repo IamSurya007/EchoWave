@@ -19,6 +19,7 @@ export default function DialogDemo() {
   const [file, setFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const inputRef = useRef(null);
+  const [error, setError] = useState("")
 
   const handleIconClick = () => {
     inputRef.current.click();
@@ -36,12 +37,19 @@ export default function DialogDemo() {
   formData.append("file", file);
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await axios.post("/post/", formData, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    });
-    console.log(response.data.message);
+    try{
+      const response = await axios.post("/post/", formData, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      console.log(response.data.message);
+    }catch(e){
+      if(e.response && e.response.status !== 200){
+        setError(e.response.data.message);
+      }
+      console.log(e.message)
+    }
   };
   return (
     <Dialog>
@@ -70,7 +78,7 @@ export default function DialogDemo() {
             />
             {imagePreview && (
               <img
-                className=" border-b border-black items-center "
+                className=" border-b max-h-[calc(3/4*90vh)] border-black items-center "
                 src={imagePreview}
                 alt="imagePreview"
               />
@@ -89,6 +97,7 @@ export default function DialogDemo() {
             />
           </div>
         </div>
+        {error && <div className=" text-red-600 font-medium">{error}</div>}
         <DialogFooter>
           <Button className=" bg-blue-400" onClick={handleSubmit} type="submit">
             Post

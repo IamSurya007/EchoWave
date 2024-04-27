@@ -67,10 +67,10 @@ const Sidebar = () => {
         </div>
         </div>
       )}
-      <div className=" p-2 font-bold bg-white-200 hover:bg-slate-400 hover:rounded-md hover:cursor-pointer flex items-center" >
+      <Link to="/" className=" p-2 font-bold bg-white-200 hover:bg-slate-400 hover:rounded-md hover:cursor-pointer flex items-center" >
           <img className=" size-12 rounded-full object-cover" src={logo} alt="logo"/>
           <span className=" hidden lg:block">Echowave</span>
-        </div>
+        </Link>
       <ul className="list-none flex flex-col space-y-1">
         
         <li className="">

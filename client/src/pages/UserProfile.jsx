@@ -33,6 +33,15 @@ const UserProfile = () => {
       }
       fetchUser();
     },[username])
+    useEffect(()=>{
+      if(profile?.followers?.includes(user?.userId)){
+        setIsFollowing(true)
+        console.log("following")
+      }
+      else{
+        setIsFollowing(false)
+      }
+    },[profile, user])
     const handleFollow= async()=>{
       try{
         const res = await axios.post(`/user/${username}/follow`, {username},
@@ -43,17 +52,12 @@ const UserProfile = () => {
         }
       )
       setIsFollowing(true)
+      profile?.followers.push(user?.userId)
       console.log(res.data)
     }catch(e){
       console.log(e)
     }
   }
-  useEffect(()=>{
-    if(profile?.followers?.includes(user?.userId)){
-      setIsFollowing(true)
-      console.log("following")
-    }
-  },[profile])
   return (
       <Layout>
         <div className=" flex items-center justify-center mt-20">

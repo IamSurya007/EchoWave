@@ -51,6 +51,7 @@ const PostCard = ({ post }) => {
       console.log(res.data)
       if(res.status === 200){
         setLikes(true)
+        post.likedBy.push(user?.user.userId)
       }
     }catch(err){
       console.log(err)
@@ -58,11 +59,10 @@ const PostCard = ({ post }) => {
   }
 
   useEffect(()=>{
-    if(post?.likedBy?.includes(user?.user.userId)){
+    if(post?.likedBy?.includes(user?.user?.userId)){
       setLikes(true)
-      post.likedBy.push(user?.user.userId)
     }
-  },[post])
+  },[post, user])
   return (
     <div className=' pt-3 border-2 rounded-md '>
         <div className=' flex items-center space-x-4 h-12 pb-3'>

@@ -28,6 +28,9 @@ export const getPost = async (req, res) => {
 
 export const createPost = async (req, res) => {
   try {
+    if(!req.body.description){
+      return res.status(400).json({ message: 'Description is required' });
+    }
     if(req.file){
       const user= await User.findById(req.user.userId)
       await uploadFile(req.file, user.name, "posts")
@@ -42,7 +45,7 @@ export const createPost = async (req, res) => {
     const newPost = await post.save();
     res.status(201).json({newPost, message:" Uploaded successfully"});
   } catch (err) {
-    res.status(400).json({ errmessage: err.message });
+    res.status(400).json({ message: err.message });
   }
 };
 
