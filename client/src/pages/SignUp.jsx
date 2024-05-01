@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { useSignup } from "@/Components/hooks/useSignUp";
+import { useSignup } from "@/hooks/useSignUp";
 // import { MdOutlineVisibility } from "react-icons/md";
 // import { MdOutlineVisibilityOff } from "react-icons/md";
 import { Label } from "@/Components/ui/label";

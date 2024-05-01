@@ -1,11 +1,11 @@
 import Layout from "@/Components/Layout.jsx";
-import PostCard from "@/Components/PostCard";
+import PostCard from "@/ui/PostCard";
 import { Button } from "@/Components/ui/button";
 import axios from '@/utils/api.js'
 import {  useEffect, useState } from "react";
 // import { useAuthContext } from "../Components/hooks/UseAuthContext.jsx";
 import { Link, useParams } from "react-router-dom";
-import { useAuthContext } from "@/Components/hooks/UseAuthContext";
+import { useAuthContext } from "@/hooks/UseAuthContext";
 
 const UserProfile = () => {
     const {user} = useAuthContext()
@@ -13,7 +13,6 @@ const UserProfile = () => {
     const [profile, setProfile] = useState("")
     const [posts, setPosts] = useState([])
     const [isFollowing, setIsFollowing] = useState(false)
-
     
     useEffect(()=>{
       const fetchUser = async () => {
@@ -33,6 +32,9 @@ const UserProfile = () => {
       }
       fetchUser();
     },[username])
+
+    const isCurrentUser = profile?._id === user?._id;
+    console.log(isCurrentUser, profile, user)
     useEffect(()=>{
       if(profile?.followers?.includes(user?.userId)){
         setIsFollowing(true)
@@ -65,22 +67,30 @@ const UserProfile = () => {
             <div className=" flex flex-col ">
             <div className=" md:flex font-medium  mt-5 ml-10">
             {profile?.name}
+            
+            {!isCurrentUser &&
             <div className=" flex items-center mt-4 md:mt-0">
             <Button onClick={handleFollow} className={`bg-blue-600 ml-0 md:ml-8 hover:bg-blue-500 ${isFollowing ? 'hidden': ''}`}>Follow</Button>
             <Button  className={`md:ml-8 ml-0  bg-green-600 border-b hover:bg-green-500 ${isFollowing ? '': 'hidden'}`}>Following</Button>
           <Link to={`/direct/t/${profile._id}`} className=" ml-5  ">Message</Link>
             </div>
+            }
+            {isCurrentUser &&
+            <div className=" flex items-center mt-4 md:mt-0">
+            <Link to="/account/edit" className=" text-inherit bg-gray-400 p-1 rounded-md px-4 bg-opacity-20 hover:bg-opacity-40 hover:bg-gray-400 ml-0 md:ml-8">Edit Profile</Link>
+            
+            </div>
+            }
             </div>
             <div className=" mt-5 flex ml-10 gap-x-8 font-sans">
               <h1>{posts.length} posts</h1>
               <h1>{profile?.followers?.length} followers</h1>
               <h1>{profile?.following?.length} following</h1>
             </div>
-            <div className=" ml-10 mt-4 font-serif">{profile?.name}</div>
+            <div className=" ml-10 mt-4 font-serif">{profile?.bio}</div>
             </div>
       </div>
       <div className=" sm:w-1/3 rounded-md mx-auto mt-10 grid ">
-     
         {posts.sort((a, b)=> (new Date(b.createdAt)- new Date(a.createdAt))).map((post, index)=>{
           return <PostCard key={index} post={post} />
         })}

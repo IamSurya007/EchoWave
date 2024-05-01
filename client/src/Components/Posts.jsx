@@ -1,4 +1,4 @@
-import PostCard from "./PostCard"
+import PostCard from "../ui/PostCard"
 import { useEffect, useState } from "react"
 import axios from "@/utils/api.js"
 

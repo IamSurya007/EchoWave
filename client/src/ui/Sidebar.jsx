@@ -3,12 +3,12 @@ import { LuSearch } from "react-icons/lu";
 import { LuMessageSquare } from "react-icons/lu";
 import { PiNotification, PiSignIn } from "react-icons/pi";
 import { PiSignOut } from "react-icons/pi";
-import { useLogout } from "./hooks/UseLogout";
-import { useAuthContext } from "./hooks/UseAuthContext";
+import { useLogout } from "../hooks/UseLogout";
+import { useAuthContext } from "../hooks/UseAuthContext";
 import {  useState } from "react";
 import axios from "@/utils/api.js"
 import { IoIosArrowBack } from "react-icons/io";
-import { ModeToggle } from "./mode-toggle";
+import { ModeToggle } from "../Components/mode-toggle";
 import { Link } from "react-router-dom";
 import DialogDemo from "./DialogMemo";
 import logo from '../assets/logo.png'
@@ -40,7 +40,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="h-screen border-r fixed shadow-2xl mt-7 ml-10 hidden md:block md:w-1/6 ">
+    <div className="h-screen  border-r fixed shadow-2xl mt-7 ml-10 hidden md:block md:w-1/6 ">
       {serachVisible && (
         <div className=" flex flex-col rounded-sm">
           <div className=" flex-col fixed top-0 left-0 w-full mt-3 bg-opacity-50 flex justify-center items-center">
@@ -76,7 +76,6 @@ const Sidebar = () => {
         <li className="">
           <Link to="/" className="p-3 pl-3 font-bold  hover:bg-slate-400 hover:rounded-md hover:cursor-pointer flex items-center gap-3">
           <LuHome className=" text-xl" />
-          
           <span className=" hidden lg:block">Home</span>
           </Link>
         </li>
@@ -87,7 +86,7 @@ const Sidebar = () => {
           <LuSearch className="text-xl" />
           
           <span className=" hidden lg:block">Search</span>
-        </li>
+        </li> 
         <li className="p-3 pl-3 font-bold bg-white-200 hover:bg-slate-400 hover:rounded-md hover:cursor-pointer flex items-center gap-3">
           <LuMessageSquare className="text-xl" />
           
@@ -115,9 +114,7 @@ const Sidebar = () => {
           <span className=" hidden lg:block">Login</span>
         </a>
       )}
-      {/* <div className=" mt-3 p-1.5 font-bold bg-white-200">
-        <ModeToggle /> 
-      </div> */}
+     
       {user && (
         <ul className=" mt-32 space-y-1">
           <li className="">

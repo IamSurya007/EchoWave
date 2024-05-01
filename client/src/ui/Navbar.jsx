@@ -1,6 +1,6 @@
 import { LuHome, LuMessageSquare, LuSearch , LuPlus } from "react-icons/lu";
 import { Link } from "react-router-dom";
-import { useAuthContext } from "./hooks/UseAuthContext";
+import { useAuthContext } from "../hooks/UseAuthContext";
 import { PiSignIn } from "react-icons/pi";
 
 const NavBar = () => {

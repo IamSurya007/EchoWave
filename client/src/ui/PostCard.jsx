@@ -1,12 +1,12 @@
 /* eslint-disable react/prop-types */
 import { LuSend, LuHeart } from "react-icons/lu";
-import { PiDotsThreeVertical } from "react-icons/pi";
 import { FaRegComment } from "react-icons/fa";
 import { formatDistanceToNow } from "date-fns";
 import { Link } from "react-router-dom";
 import axios from '../utils/api.js'
 import { useEffect, useState } from "react";
-import { useAuthContext } from "./hooks/UseAuthContext.jsx";
+import { useAuthContext } from "../hooks/UseAuthContext.jsx";
+import { Delete } from "./Delete.jsx";
 
 const PostCard = ({ post }) => {
   const user = useAuthContext()
@@ -51,7 +51,7 @@ const PostCard = ({ post }) => {
       console.log(res.data)
       if(res.status === 200){
         setLikes(true)
-        post.likedBy.push(user?.user.userId)
+        post.likedBy.push(user?.user._id)
       }
     }catch(err){
       console.log(err)
@@ -59,7 +59,7 @@ const PostCard = ({ post }) => {
   }
 
   useEffect(()=>{
-    if(post?.likedBy?.includes(user?.user?.userId)){
+    if(post?.likedBy?.includes(user?.user?._id)){
       setLikes(true)
     }
   },[post, user])
@@ -74,7 +74,7 @@ const PostCard = ({ post }) => {
           <span className=" ml-3 font-light">{time}</span>
         </Link>
         <div className=' pr-3'>
-        <PiDotsThreeVertical className=' text-2xl' />
+          <Delete/>
         </div>
         </div>
         <div className=' flex justify-center  '>

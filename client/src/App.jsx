@@ -6,7 +6,7 @@ import LandingPage from './pages/LandingPage';
 import { ThemeProvider } from './Components/theme-provider';
 import UserProfile from './pages/userProfile';
 import Chat from './pages/Chat';
-import Profile from './pages/Profile';
+import EditProfile from './pages/EditProfile';
 
 function App() {
 
@@ -20,7 +20,7 @@ function App() {
             <Route path='login' element={ <Login/>}/>
             <Route path='signup' element={ <Signup/>}/> 
           </Route>
-          <Route path='/profile' element={<Profile/>} />     
+          <Route path='/account/edit' element={<EditProfile/>} />     
           <Route path='/:username' element={<UserProfile/>}/>
           <Route path= '/direct/t/:username' element={<Chat/>}/>
         </Routes>

@@ -21,7 +21,11 @@ const userSchema= new mongoose.Schema({
         default:"https://echowave-uploads.s3.amazonaws.com/profile.png"
     },
     followers:[{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
-    following:[{type:mongoose.Schema.Types.ObjectId, ref: 'User'}]
+    following:[{type:mongoose.Schema.Types.ObjectId, ref: 'User'}],
+    bio:{
+        type: String,
+        default: ""
+    }
 });
 
 const User = mongoose.model('User', userSchema)

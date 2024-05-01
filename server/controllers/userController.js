@@ -1,5 +1,6 @@
 import User from "../models/User.js";
 import Post from "../models/Post.js";
+import { uploadFile } from "../s3.js";
 
 const fetchUser = async (req, res) => {
     const {username} = req.body;
@@ -13,12 +14,33 @@ const fetchUser = async (req, res) => {
     }
 };
 
+export const editProfile = async(req, res)=>{
+    const {name, email, username} = req.body;
+    console.log(req.user, req.body)
+    try{
+        const user = await User.findById(req.user._id);
+        if(!user){
+            return res.status(404).json({message:"user not found"})
+        }
+        if(req.file){
+            await uploadFile(req.file, user.name, "userIcons")
+            console.log(req.file.originalname)
+            const userIcon = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/${user.name}/userIcons/${req.file.originalname}`
+            req.body.userIcon = userIcon
+        }
+        const updatedUser = await User.findByIdAndUpdate(user._id, req.body, {new: true});
+        res.json(updatedUser);
+    }catch(e){
+        res.status(404).json({message: e.message})
+    }
+}
+
 export const followUser = async(req, res)=>{
     const {username} = req.body
     console.log(username)
     
     try{
-        const user = await User.findById(req.user.userId);
+        const user = await User.findById(req.user._id);
         const userToFollow = await User.findOne({name: username});
         if(!userToFollow) {
             res.status(404).json({ message: 'user not found' });

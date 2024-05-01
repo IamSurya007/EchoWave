@@ -35,7 +35,7 @@ export const useLogin = () => {
         navigate('/');
       }
     }catch(err){
-      if( err.response && err.response.status==400){
+      if( err.response || err.response.status===401){
         setError(err.response.data.message)
       }
     }

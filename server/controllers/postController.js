@@ -32,13 +32,13 @@ export const createPost = async (req, res) => {
       return res.status(400).json({ message: 'Description is required' });
     }
     if(req.file){
-      const user= await User.findById(req.user.userId)
+      const user= await User.findById(req.user._id)
       await uploadFile(req.file, user.name, "posts")
       const fileUrl = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/${user.name}/posts/${req.file.originalname}`
       req.body.fileUrl= fileUrl
     }
   const post = new Post({
-    user: req.user.userId,
+    user: req.user._id,
     description: req.body.description,
     fileUrl: req.body.fileUrl,
   });
@@ -75,7 +75,7 @@ export const likePost = async(req, res)=>{
   if(!post){
     res.status(404).json({ message:" post not found" });
   }
-  const user = await User.findById(req.user.userId);
+  const user = await User.findById(req.user._id);
    if(!user){
     res.status(404).json({ message:" user not found" });
    }

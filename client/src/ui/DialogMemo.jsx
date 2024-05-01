@@ -90,6 +90,7 @@ export default function DialogDemo() {
               className=" outline-none overflow-hidden bg-inherit resize-none w-4/5"
               placeholder="What's on your mind?"
               onChange={(e) => setDescription(e.target.value)}
+              style={{overflow: 'auto'}}
             />
             <GoPaperclip
               onClick={handleIconClick}
