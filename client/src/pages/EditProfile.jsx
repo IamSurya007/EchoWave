@@ -15,10 +15,12 @@ const EditProfile = () => {
     name: user?.name || "",
     email: user?.email || "",
     bio: user?.bio || "",
+    username: user?.username || "",
   };
   const [formData, setFormData] = useState(initialState);
   const [file, setFile] = useState(user?.file);
   const [imgPreview, setImgPreview] = useState(user?.userIcon);
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleChange = (e) => {
     const selected = e.target.files[0];
@@ -44,7 +46,9 @@ const EditProfile = () => {
     formdata.append("name", formData.name);
     formdata.append("email", formData.email);
     formdata.append("bio", formData.bio);
+    formdata.append("username", formData.username);
     e.preventDefault();
+    setIsLoading(true)
     const res = await axios.post("user/account/edit", formdata, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -54,6 +58,7 @@ const EditProfile = () => {
       updateUser(res.data)
       alert("Profile updated successfully")
       console.log("user",user, res.data)
+      setIsLoading(false)
     }
   };
 
@@ -76,8 +81,9 @@ const EditProfile = () => {
             />
             <EditIcon onClick={handleIconClick} className="w-5 h-5 items-end" />
           </div>
+
           <div className=" mt-3 flex items-center">
-            <Label className=" w-1/12">Name :</Label>
+            <Label className=" w-28">Username :</Label>
             <Input
               className=" w-1/3 outline-none bg-inherit"
               defaultValue={formData?.name}
@@ -87,7 +93,17 @@ const EditProfile = () => {
             />
           </div>
           <div className=" flex items-center">
-            <Label className=" w-1/12">Email :</Label>
+            <Label className=" w-28">Name :</Label>
+            <Input
+              className=" w-1/3 outline-none bg-inherit"
+              defaultValue={formData?.username}
+              type="text"
+              onChange={handleInp}
+              name="username"
+            />
+          </div>
+          <div className=" flex items-center">
+            <Label className=" w-28">Email :</Label>
             <Input
               className=" w-1/3 outline-none bg-inherit"
               type="email"
@@ -97,7 +113,7 @@ const EditProfile = () => {
             />
           </div>
           <div className=" flex items-center">
-            <Label className=" w-1/12">Bio :</Label>
+            <Label className=" w-28">Bio :</Label>
             <Input
               className="  w-1/3 max-h-full overflow-auto outline-none bg-inherit"
               defaultValue={formData?.bio}
@@ -111,6 +127,7 @@ const EditProfile = () => {
           <Button
             onClick={handleSubmit}
             className="text-white text-base flex justify-center p-1 px-6 bg-blue-600"
+            disabled={isLoading}
           >
             Save
           </Button>

@@ -20,6 +20,7 @@ export default function DialogDemo() {
   const [imagePreview, setImagePreview] = useState(null);
   const inputRef = useRef(null);
   const [error, setError] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleIconClick = () => {
     inputRef.current.click();
@@ -37,6 +38,7 @@ export default function DialogDemo() {
   formData.append("file", file);
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true)
     try{
       const response = await axios.post("/post/", formData, {
         headers: {
@@ -44,6 +46,10 @@ export default function DialogDemo() {
         },
       });
       console.log(response.data.message);
+      if(response.status === 201){
+        alert(response.data.message);
+      }
+      setIsLoading(false)
     }catch(e){
       if(e.response && e.response.status !== 200){
         setError(e.response.data.message);
@@ -100,7 +106,7 @@ export default function DialogDemo() {
         </div>
         {error && <div className=" text-red-600 font-medium">{error}</div>}
         <DialogFooter>
-          <Button className=" bg-blue-400" onClick={handleSubmit} type="submit">
+          <Button className=" bg-blue-400" disabled={isLoading} onClick={handleSubmit} type="submit">
             Post
           </Button>
         </DialogFooter>

@@ -44,16 +44,15 @@ const registerUser = async (req, res) => {
             const hashedPassword = await bcrypt.hash(password, 10);
             req.body.password = hashedPassword;
             // Create a new user with profile picture URL
-            const newUser = new User(req.body);
+            const user = new User(req.body);
 
-            await newUser.save();
+            await user.save();
 
             // Generate JWT token
-            const token = jwt.sign({ _id: newUser._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
-
-            const createdUser = await User.findById(newUser._id).select("-password");
+            const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
             // Respond with user details and token
-            res.status(200).json(createdUser);
+            
+            res.status(200).json({token:token,email:user.email, name:user.name,_id:user._id,bio:user.bio,  userIcon: user.userIcon});
 
     } catch (error) {
         console.error('Error registering user:', error);

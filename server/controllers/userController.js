@@ -59,5 +59,27 @@ export const followUser = async(req, res)=>{
         res.status(500).json({ message: 'Server error' });
     }
 }
+export const unfollowUser = async(req, res)=>{
+    const {username}= req.body;
+    try{
+        const user = await User.findById(req.user._id);
+        const userToUnfollow = await User.findOne({name: username});
+        if(!userToUnfollow) {
+            res.status(404).json({ message: 'user not found' });
+        }
+        //remove userToFollow in the following of user
+        await User.findByIdAndUpdate(user._id, {$pull:{following: userToUnfollow._id}}) 
+        console.log(user)
+        
+        //remove user in the followers of userToFollow
+        await User.findByIdAndUpdate(userToUnfollow._id, {$pull:{followers: user._id}})
+        console.log(userToUnfollow)
+        res.status(200).json({ message: 'unfollowed successfully' });
+
+    }catch(e){
+        res.status(404).json({message: e.message})
+    }
+
+}
 
 export default fetchUser; 

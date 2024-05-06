@@ -25,10 +25,12 @@ export const useSignup = () => {
     try{
       const response = await axios.post('/auth/signup', formdata)
       const json = await response.data
+      const token = await json.token
       
     if (response.status === 200) {
       // save the user to local storage
       localStorage.setItem('user', JSON.stringify(json))
+      localStorage.setItem('token', token)
       // update the auth context
       dispatch({type: 'LOGIN', payload: json})
 
