@@ -5,12 +5,22 @@ import User from "../models/User.js";
 import Comment from "../models/Comment.js";
 
 export const getPosts = async (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
+  console.log(req.query.page)
+  console.log(req.query.limit) 
   try {
-    const posts = await Post.find().populate("user"); // Populate user field
-    res.json(posts);
+    const totalPosts = await Post.countDocuments();
+    const totalPages = Math.ceil(totalPosts / limit);
+    const posts = await Post.find()
+      .populate("user")
+      .sort({createdAt: -1} ) // Populate user field
+      .skip((page - 1) * limit) 
+      .limit(limit);
+    res.json({ fetchedPosts: posts, fetchedCurrentPage: page, fetchedTotalPages: totalPages });
   } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
+    res.status(500).json({ message: err.message }); 
+  } 
 };
 
 export const getPost = async (req, res) => {
@@ -118,20 +128,20 @@ export const deletePost = async (req, res) => {
   }
 };
 
-export const getComments = async(req, res)=>{
-  try{
+export const getComments = async (req, res) => {
+  try {
     const post = req.body;
-  if(!post){
-    res.status(404).json({ message:" post not found" });
-  }
-  const posts = await Post.findById(post._id).populate("comments");
-  const comments= posts.comments;
-  // const comments = await Comment.find({ _id: { $in: commentIds } });
-  res.status(200).json({comments});
-  }catch(err) {
+    if (!post) {
+      res.status(404).json({ message: " post not found" });
+    }
+    const posts = await Post.findById(post._id).populate("comments");
+    const comments = posts.comments;
+    // const comments = await Comment.find({ _id: { $in: commentIds } });
+    res.status(200).json({ comments });
+  } catch (err) {
     res.status(404).json({ message: err.message });
   }
-}
+};
 
 export const addComment = async (req, res) => {
   try {
@@ -145,7 +155,9 @@ export const addComment = async (req, res) => {
       post: req.body.post,
     });
     await newComment.save();
-    await Post.findByIdAndUpdate(req.body.post, {$addToSet:{comments: newComment._id}}) 
+    await Post.findByIdAndUpdate(req.body.post, {
+      $addToSet: { comments: newComment._id },
+    });
     res
       .status(200)
       .json({ message: "Comment added successfully", comment: newComment });
