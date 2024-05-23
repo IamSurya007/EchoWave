@@ -7,8 +7,6 @@ import Comment from "../models/Comment.js";
 export const getPosts = async (req, res) => {
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 10;
-  console.log(req.query.page)
-  console.log(req.query.limit) 
   try {
     const totalPosts = await Post.countDocuments();
     const totalPages = Math.ceil(totalPosts / limit);

@@ -7,13 +7,10 @@ import { useEffect, useState } from "react";
 import { useAuthContext } from "../hooks/UseAuthContext.jsx";
 import { Delete } from "./Delete.jsx";
 import CommentDialog from "./CommentDialog.jsx";
-import { FaRegComment } from "react-icons/fa";
 
 const PostCard = ({ post }) => {
   const user = useAuthContext();
   const [likes, setLikes] = useState(false);
-  const [comments, setComments] = useState([false]);
-  const [isLoading, setIsLoading] = useState(false);
   var time = formatDistanceToNow(new Date(new Date(post.createdAt)), {
     addSuffix: false,
     includeSeconds: true,
@@ -136,15 +133,15 @@ const PostCard = ({ post }) => {
           </button>
         )}
         {/* <FaRegComment className=" text-3xl " /> */}
-        <div >
-          <CommentDialog post={post} />
+        <div  >
+          <CommentDialog post={post}  />
         </div>
         <LuSend className=" text-3xl" />
       </div>
       <div>
         <div className=" flex flex-col mb-3">
           <span className=" pl-3">{post.likedBy?.length} likes</span>
-          <span className=" pl-3">
+          <span className=" pl-3" >
             view all {post.comments.length} comments
           </span>
         </div>

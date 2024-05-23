@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import axios from '@/utils/api.js'
 
 const CommentDialog = (props) => {
+  // eslint-disable-next-line react/prop-types
   const post = props.post
   const [content, setContent] = useState("")
   const [comments, setComments]= useState([])

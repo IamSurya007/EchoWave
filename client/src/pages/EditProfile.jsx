@@ -1,7 +1,7 @@
 import Layout from "@/Components/Layout";
 import { Input } from "@/Components/ui/input";
 import { useAuthContext } from "@/hooks/UseAuthContext";
-import { Button } from "@material-tailwind/react";
+import { Button,  } from "@material-tailwind/react";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import { EditIcon } from "lucide-react";
 import { useRef, useState } from "react";
@@ -114,8 +114,8 @@ const EditProfile = () => {
           </div>
           <div className=" flex items-center">
             <Label className=" w-28">Bio :</Label>
-            <Input
-              className="  w-1/3 max-h-full overflow-auto outline-none bg-inherit"
+            <textarea
+              className=" border pl-1 pt-1 w-1/3 max-h-full overflow-auto outline-none bg-inherit"
               defaultValue={formData?.bio}
               type="email"
               onChange={handleInp}

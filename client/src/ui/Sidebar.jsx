@@ -44,7 +44,7 @@ const Sidebar = () => {
       {serachVisible && (
         <div className=" flex flex-col rounded-sm">
           <div className=" flex-col fixed top-0 left-0 w-full mt-3 bg-opacity-50 flex justify-center items-center">
-          <div className="bg-white bg-opacity-90 p-2 w-1/3  shadow-lg flex items-center">
+          <div className="bg-white bg-opacity-90 p-2 w-1/3 shadow-lg flex items-center">
           <IoIosArrowBack onClick={toggleSearch} className=" text-black hover:cursor-pointer" />
             <input
               type="text"
@@ -87,10 +87,11 @@ const Sidebar = () => {
           
           <span className=" hidden lg:block">Search</span>
         </li> 
-        <li className="p-3 pl-3 font-bold bg-white-200 hover:bg-slate-400 hover:rounded-md hover:cursor-pointer flex items-center gap-3">
+        <li >
+          <Link className="p-3 pl-3 font-bold bg-white-200 hover:bg-slate-400 hover:rounded-md hover:cursor-pointer flex items-center gap-3" to="/direct/inbox">
           <LuMessageSquare className="text-xl" />
-          
           <span className=" hidden lg:block">Messages</span>
+          </Link>
         </li>
         <li className="p-3 pl-3 font-bold bg-white-200 hover:bg-slate-400 hover:rounded-md hover:cursor-pointer flex items-center gap-3">
           <PiNotification className="text-xl" />

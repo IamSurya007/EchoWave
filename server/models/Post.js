@@ -10,7 +10,6 @@ const Posts= new mongoose.Schema({
     },
     fileUrl:{
         type: String,
-        validate: validator.isURL,
     },
     description:{
         type: String,

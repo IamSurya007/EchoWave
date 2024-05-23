@@ -61,10 +61,10 @@ const Posts = () => {
   },[])
   return (
     <div className=" md:w-1/3 rounded-md mx-auto" >
-      {isLoading && <div className=" flex justify-center items-center">Loading...!!!</div>}
         {posts.sort((a,b)=> new Date(b.createdAt)- new Date(a.createdAt)).map((post, index)=>{
           return <PostCard key={index} post={post} /> 
         })}
+        {isLoading && <div className=" flex justify-center items-center">Loading...!!!</div>}
     </div>
   )
 }
