@@ -3,17 +3,17 @@ import * as dotenv from "dotenv";
 dotenv.config();
 
 const s3Client = new S3Client({
-    region: process.env.AWS_REGION,
+    region: process.env.AWS_REGION_1,
     credentials: {
-        accessKeyId: process.env.AWS_ACCESS_KEY,
-        secretAccessKey: process.env.AWS_SECRET_KEY,
+        accessKeyId: process.env.AWS_ACCESS_KEY_1,
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY_1,
     },
 });
 
 export const uploadFile = async (file, name, folderName)=>{
         try{
             const s3Params = {
-            Bucket: process.env.AWS_BUCKET_NAME,
+            Bucket: process.env.AWS_BUCKET_NAME_1,
             Key: `${name}/${folderName}/${file.originalname}`,
             Body: file.buffer,
             ContentType: file.mimetype
