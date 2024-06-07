@@ -6,12 +6,12 @@ import verifyToken from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
-router.get('/',getPosts)
+router.get('/', verifyToken, getPosts)
 router.post('/', verifyToken, upload.single("file"), createPost)
 router.post('/:postsId/like', verifyToken, likePost)
 router.post('/:postsId/unlike', verifyToken, unlike)
 router.post('/:postsId/addcomment', verifyToken, addComment)
-router.post('/:postId/comments', getComments )
+router.post('/:postId/comments', getComments ) 
 
 
 export default router;

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useAuthContext } from './useAuthContext'
 import { useNavigate } from "react-router-dom";
-import axio from '@/utils/api.js'
+import axios from '@/utils/api.js'
 export const useLogin = () => {
   const [error, setError] = useState(null)
   const [isLoading, setIsLoading] = useState(null)
@@ -19,7 +19,7 @@ export const useLogin = () => {
     // })
 
     try{
-      const response = await axio.post('/auth/login', formdata)
+      const response = await axios.post('/auth/login', formdata)
       const json = await response.data
       const token = json.token
       console.log(json.token)

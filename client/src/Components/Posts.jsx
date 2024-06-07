@@ -10,7 +10,7 @@ const Posts = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
   const [totalPages, setTotalPages] = useState(0)
-  const [uniques, setUniques] = useState([])
+  const [uniques, setUniques] = useState([]) 
   const [loaded, setLoaded] = useState(false)
   useEffect(()=>{
     const getPosts = async()=>{
@@ -20,6 +20,9 @@ const Posts = () => {
       setIsLoading(true)
       try{
         const res = await axios.get('/post', {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
           params:{
             page:currentPage,
             limit:10
@@ -28,7 +31,6 @@ const Posts = () => {
         const {fetchedPosts, fetchedCurrentPage, fetchedTotalPages} = res.data
         const newPosts= fetchedPosts.filter(post=>!posts.find(existingPost => existingPost._id === post._id))
         setPosts(prevPosts=>[...prevPosts, ...newPosts])
-        setCurrentPage(fetchedCurrentPage)
         setTotalPages(fetchedTotalPages)
         if(fetchedCurrentPage >= fetchedTotalPages){
           setLoaded(true)

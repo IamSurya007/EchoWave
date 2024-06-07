@@ -7,6 +7,7 @@ import { ThemeProvider } from './Components/theme-provider';
 import UserProfile from './pages/userProfile';
 import Chat from './pages/Chat';
 import EditProfile from './pages/EditProfile';
+import Chatbox from './Components/Chatbox';
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
           <Route path='/account/edit' element={<EditProfile/>} />     
           <Route path='/:username' element={<UserProfile/>}/>
           <Route path= '/direct/t/:username' element={<Chat/>}/>
+          <Route path='/chat' element={<Chatbox/>}/>
         </Routes>
       </Router>
       </ThemeProvider>

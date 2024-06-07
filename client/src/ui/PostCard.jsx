@@ -11,7 +11,7 @@ import CommentDialog from "./CommentDialog.jsx";
 const PostCard = ({ post }) => {
   const user = useAuthContext();
   const [likes, setLikes] = useState(false);
-  var time = formatDistanceToNow(new Date(new Date(post.createdAt)), {
+  var time = formatDistanceToNow((new Date(post.createdAt)), {
     addSuffix: false,
     includeSeconds: true,
   });
@@ -21,7 +21,11 @@ const PostCard = ({ post }) => {
     if (time.startsWith("less")) time = time.slice(10);
     if (time.includes("year")) time = time[0] + "y";
     if (time.includes("month")) {
-      time = time.substring(0, 2) + "h";
+      time = time.substring(0, 2) + "m";
+      time = time.replace(/\s+/, "");
+    }
+    if (time.includes("week")){
+      time =time.substring(0, 2) + "w";
       time = time.replace(/\s+/, "");
     }
     if (time.includes("day")) {
