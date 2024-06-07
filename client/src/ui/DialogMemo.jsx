@@ -35,23 +35,33 @@ export default function DialogDemo() {
 
   const formData = new FormData();
   formData.append("description", description);
-  formData.append("file", file);
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true)
-    try{
+    try {
+      const { url } = await axios.get("/s3Url").then(res => res.data)
+      await fetch(url, {
+        method: "PUT",
+        headers: {
+          "Content-Type": file.type
+        },
+        body: file
+      })
+
+      const imageUrl = url.split('?')[0]
+      formData.append('imageUrl', imageUrl)
       const response = await axios.post("/post/", formData, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
       console.log(response.data.message);
-      if(response.status === 201){
+      if (response.status === 201) {
         alert(response.data.message);
       }
       setIsLoading(false)
-    }catch(e){
-      if(e.response && e.response.status !== 200){
+    } catch (e) {
+      if (e.response && e.response.status !== 200) {
         setError(e.response.data.message);
       }
       console.log(e.message)
@@ -64,7 +74,7 @@ export default function DialogDemo() {
           className="bg-blue-500 text-md items-center text-white p-3 py-5 justify-center ml-2 hover:cursor-pointer hover:bg-blue-400 flex md:w-2/3 rounded-full"
           variant="outline"
         >
-          <span className=""><LuPlus className=" text-xl"/></span>
+          <span className=""><LuPlus className=" text-xl" /></span>
           <span className=" hidden lg:block">Post</span>
         </Button>
       </DialogTrigger>
@@ -96,7 +106,7 @@ export default function DialogDemo() {
               className=" outline-none overflow-hidden bg-inherit resize-none w-4/5"
               placeholder="What's on your mind?"
               onChange={(e) => setDescription(e.target.value)}
-              style={{overflow: 'auto'}}
+              style={{ overflow: 'auto' }}
             />
             <GoPaperclip
               onClick={handleIconClick}

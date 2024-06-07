@@ -41,16 +41,10 @@ export const createPost = async (req, res) => {
     if (!req.body.description) {
       return res.status(400).json({ message: "Description is required" });
     }
-    if (req.file) {
-      const user = await User.findById(req.user._id);
-      await uploadFile(req.file, user.name, "posts");
-      const fileUrl = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/${user.name}/posts/${req.file.originalname}`;
-      req.body.fileUrl = fileUrl;
-    }
     const post = new Post({
       user: req.user._id,
       description: req.body.description,
-      fileUrl: req.body.fileUrl,
+      fileUrl: req.body.imageUrl,
     });
     const newPost = await post.save();
     res.status(201).json({ newPost, message: " Uploaded successfully" });

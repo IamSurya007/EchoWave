@@ -8,6 +8,7 @@ import searchRoutes from './routes/searchRoutes.js'
 import userRoutes from './routes/userRoutes.js'
 import postRoutes from './routes/postRoutes.js'
 import http from 'http'
+import { getUrl } from './controllers/getUrl.js';
 
 dotenv.config()
 
@@ -32,6 +33,7 @@ app.use(
 )
 
 app.use(bodyParser.json())
+app.get('/s3Url', getUrl)
 app.use('/auth', authRoutes)
 app.use('/search', searchRoutes)
 app.use('/user', userRoutes)

@@ -12,4 +12,5 @@ router.post('/signup', upload.single("file"), registerUser)
 //login
 router.post('/login',upload.any(), loginUser)
 
+
 export default router; 
