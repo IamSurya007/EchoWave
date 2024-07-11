@@ -3,7 +3,7 @@ import { LuSearch } from "react-icons/lu";
 import { LuMessageSquare } from "react-icons/lu";
 import { PiNotification, PiSignIn } from "react-icons/pi";
 import { PiSignOut } from "react-icons/pi";
-import { useLogout } from "../hooks/UseLogout";
+import { useLogout } from "../hooks/useLogout";
 import { useAuthContext } from "../hooks/UseAuthContext";
 import {  useState } from "react";
 import axios from "@/utils/api.js"
