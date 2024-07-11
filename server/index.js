@@ -15,7 +15,7 @@ dotenv.config()
 const app = express();
 const server = http.createServer(app)
 app.use(cors({
-  origin:process.env.CLIENT_URL || 'https://echo-wave.vercel.app',
+  origin:'https://echo-wave.vercel.app',
   credentials:true,
 }))
 
