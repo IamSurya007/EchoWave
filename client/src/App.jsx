@@ -4,7 +4,7 @@ import Signup from './pages/SignUp';
 import Login from './pages/Login';
 import LandingPage from './pages/LandingPage';
 import { ThemeProvider } from './Components/theme-provider';
-import UserProfile from './pages/userProfile';
+import UserProfile from './pages/UserProfile';
 import Chat from './pages/Chat';
 import EditProfile from './pages/EditProfile';
 import Chatbox from './Components/Chatbox';
