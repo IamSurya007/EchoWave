@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "@/Components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -7,8 +7,8 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
+} from "@/Components/ui/dialog";
+import { Input } from "@/Components/ui/input";
 import axios from "@/utils/api.js";
 import { useRef, useState } from "react";
 import { GoPaperclip } from "react-icons/go";

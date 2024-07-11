@@ -3,7 +3,7 @@
     DropdownMenuContent,
     DropdownMenuItem,
     DropdownMenuTrigger,
-  } from "@/components/ui/dropdown-menu"
+  } from "@/Components/ui/dropdown-menu"
 import { PiDotsThreeVertical } from "react-icons/pi"
   
   export function Delete() {
@@ -20,4 +20,3 @@ import { PiDotsThreeVertical } from "react-icons/pi"
       </DropdownMenu>
     )
   }
-  

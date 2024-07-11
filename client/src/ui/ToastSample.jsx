@@ -1,7 +1,7 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
-import { useToast } from "@/components/ui/use-toast"
+import { Button } from "@/Components/ui/button"
+import { useToast } from "@/Components/ui/use-toast"
 
 export function ToastSimple() {
   const { toast } = useToast()
