@@ -117,16 +117,16 @@ const Sidebar = () => {
       )}
      
       {user && (
-        <ul className=" mt-32 space-y-1">
+        <ul className="fixed bottom-0 w-max space-y-1">
           <li className="">
             <Link className="p-3 font-bold bg-white-200 hover:bg-slate-400 hover:rounded-md hover:cursor-pointer flex items-center gap-3" to={`/${user?.name}`}>
             <img
-              className=" size-10 rounded-full object-cover"
+              className="size-10 rounded-full object-cover"
               src={user?.userIcon}
               alt="img"
             />{" "}
             
-            <span className=" hidden lg:block">{user?.name}</span>
+            <span className="hidden lg:block">{user?.name}</span>
             </Link>
           </li>
           <li
@@ -135,7 +135,7 @@ const Sidebar = () => {
           >
             <PiSignOut className="text-xl" />
             
-            <span className=" hidden lg:block">Logout</span>
+            <span className="hidden lg:block">Logout</span>
           </li>
         </ul>
       )}
