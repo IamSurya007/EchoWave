@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useAuthContext } from './useAuthContext'
+import { useAuthContext } from './UseAuthContext'
 import { useNavigate } from "react-router-dom";
 import axios from '@/utils/api.js';
 
