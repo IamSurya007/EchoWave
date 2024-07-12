@@ -25,7 +25,7 @@ export const editProfile = async(req, res)=>{
         if(req.file){
             await uploadFile(req.file, user.name, "userIcons")
             console.log(req.file.originalname)
-            const userIcon = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/${user.name}/userIcons/${req.file.originalname}`
+            const userIcon = `https://${process.env.AWS_BUCKET_NAME_1}.s3.amazonaws.com/${user.name}/userIcons/${req.file.originalname}`
             req.body.userIcon = userIcon
         }
         const updatedUser = await User.findByIdAndUpdate(user._id, req.body, {new: true});
