@@ -49,7 +49,7 @@ const registerUser = async (req, res) => {
             await user.save();
 
             // Generate JWT token
-            const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
+            const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
             // Respond with user details and token
             
             res.status(200).json({token:token,email:user.email, name:user.name,_id:user._id,bio:user.bio,  userIcon: user.userIcon});
@@ -79,7 +79,7 @@ const loginUser = async (req,res)=>{
             return res.status(401).json({message: "password does not match"});
         }
         //generate JWT token
-        const token = jwt.sign({_id: user._id},process.env.JWT_SECRET, {expiresIn:'1h'});
+        const token = jwt.sign({_id: user._id},process.env.JWT_SECRET);
 
         res.status(200).json({token:token,email:user.email, name:user.name,_id:user._id,bio:user.bio,  userIcon: user.userIcon,messsage: "user logged in"})
     }

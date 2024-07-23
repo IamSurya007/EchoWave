@@ -5,19 +5,31 @@ import { PiNotification, PiSignIn } from "react-icons/pi";
 import { PiSignOut } from "react-icons/pi";
 import { useLogout } from "../hooks/useLogout";
 import { useAuthContext } from "../hooks/UseAuthContext";
-import {  useState } from "react";
+import React, {useEffect, useState} from "react";
 import axios from "@/utils/api.js"
 import { IoIosArrowBack } from "react-icons/io";
 import { ModeToggle } from "../Components/mode-toggle";
 import { Link } from "react-router-dom";
 import DialogDemo from "./DialogMemo";
 import logo from '../assets/logo.png'
+import Typed from 'typed.js'
 
 const Sidebar = () => {
   const { logout } = useLogout();
   const { user } = useAuthContext();
   const [query, setQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+  const el = React.useRef(null)
+
+  // useEffect(() => {
+  //   const typed = new Typed(el.current,{
+  //     strings: ['Welcome,', 'to Echowave'],
+  //     typeSpeed: 50
+  //   })
+  //   return()=>{
+  //     typed.destroy()
+  //   }
+  // }, []);
 
   const handleChange = async (e) => {
     const value = e.target.value.trim();
@@ -72,7 +84,7 @@ const Sidebar = () => {
           <span className=" hidden lg:block">Echowave</span>
         </Link>
       <ul className="list-none flex flex-col space-y-1">
-        
+        {/*<li ref={el}></li>*/}
         <li className="">
           <Link to="/" className="p-3 pl-3 font-bold  hover:bg-slate-400 hover:rounded-md hover:cursor-pointer flex items-center gap-3">
           <LuHome className=" text-xl" />
@@ -117,7 +129,7 @@ const Sidebar = () => {
       )}
      
       {user && (
-        <ul className="fixed bottom-0 w-max space-y-1">
+        <ul className="pt-4 space-y-1">
           <li className="">
             <Link className="p-3 font-bold bg-white-200 hover:bg-slate-400 hover:rounded-md hover:cursor-pointer flex items-center gap-3" to={`/${user?.name}`}>
             <img
