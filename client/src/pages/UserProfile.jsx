@@ -16,6 +16,8 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/Components/ui/alert-dialog";
+import SettingsModal from "@/modals/SettingsModal";
+
 
 const UserProfile = () => {
   const { user } = useAuthContext();
@@ -101,30 +103,35 @@ const UserProfile = () => {
     <Layout>
 
       {isLoading && <div className=" flex justify-center items-center">Loading...!!</div>}
-      <div className=" flex items-center justify-center mt-20">
+      <div className=" flex justify-center sm:items-center sm:mt-20">
         <img
           src={profile?.userIcon}
-          className=" size-28 md:size-36 rounded-full object-cover"
+          className=" size-24 md:size-28 sm:size-36 mt-6 rounded-full object-cover"
           alt="img"
         />
         <div className=" flex flex-col ">
-          <div className=" md:flex items-center  mt-5 ml-10">
-            <div className=" text-xl">{profile?.name}</div>
+          <div className=" md:flex items-center mt-5 sm:mt-0 ml-4 sm:ml-10">
+            <div className=" text-xl flex items-end gap-2 flex-row">
+              <div>{profile?.name}</div>
+              {isCurrentUser &&
+                <div className="sm:hidden">
+                <SettingsModal/>
+                </div>
+              }
+            </div>
 
             {!isCurrentUser && (
               <div className=" flex items-center mt-4 md:mt-0">
                 <Button
                   onClick={handleFollow}
-                  className={`bg-blue-600 ml-0 px-8 md:ml-8 hover:bg-blue-500 ${
-                    isFollowing ? "hidden" : ""
-                  }`}
+                  className={`bg-blue-600 ml-0 px-8 sm:ml-8 hover:bg-blue-500 ${isFollowing ? "hidden" : ""
+                    }`}
                 >
                   Follow
                 </Button>
                 <button
-                  className={` rounded-md ml-8 bg-green-600 border-b hover:bg-green-500 ${
-                    isFollowing ? "" : "hidden"
-                  }`}
+                  className={` rounded-md ml-8 bg-green-600 border-b hover:bg-green-500 ${isFollowing ? "" : "hidden"
+                    }`}
                 >
                   <AlertDialog>
                     <AlertDialogTrigger asChild>
@@ -156,23 +163,25 @@ const UserProfile = () => {
               </div>
             )}
             {isCurrentUser && (
-              <div className=" flex items-center mt-4 md:mt-0">
-                <Link
-                  to="/account/edit"
-                  className=" text-inherit bg-gray-400 p-1 rounded-md px-4 bg-opacity-20 hover:bg-opacity-40 hover:bg-gray-400 ml-0 md:ml-8"
-                >
-                  Edit Profile
-                </Link>
+              <div>
+                <div className=" flex items-center mt-4 md:mt-0">
+                  <Link
+                    to="/account/edit"
+                    className=" text-inherit bg-gray-400 p-1 rounded-md px-4 bg-opacity-20 hover:bg-opacity-40 hover:bg-gray-400 ml-0 md:ml-8"
+                  >
+                    Edit Profile
+                  </Link>
+                </div>
               </div>
             )}
           </div>
-          <div className=" mt-3 flex ml-10 gap-x-8 font-sans">
+          <div className=" mt-3 flex ml-4 sm:ml-10 gap-x-2 justify-center sm:gap-x-8 font-sans">
             <h1>{posts.length} posts</h1>
             <h1>{profile?.followers?.length} followers</h1>
             <h1>{profile?.following?.length} following</h1>
           </div>
-          <div className=" ml-10 mt-3 font-semibold">{profile?.username}</div>
-          <div className=" ml-10 mt-1 font-serif">{profile?.bio}</div>
+          <div className="ml-4 sm:ml-10 mt-3 font-semibold">{profile?.username}</div>
+          <div className="ml-4 sm:ml-10 mt-1 font-serif">{profile?.bio}</div>
         </div>
       </div>
       <div className=" sm:w-1/3 rounded-md mx-auto mt-10 grid ">

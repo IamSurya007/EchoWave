@@ -6,6 +6,7 @@ import {useState} from "react";
 import axios from "@/utils/api.js";
 import {IoIosArrowBack} from "react-icons/io";
 import DialogDemo from "@/ui/DialogMemo.jsx";
+import UploadPostModal from "@/modals/UploadPostModal";
 
 const NavBar = () => {
   const { user } = useAuthContext();
@@ -56,7 +57,7 @@ const NavBar = () => {
               </div>
           )}
           <nav
-              className="fixed bottom-0 left-0 w-full border-t bg-white bg-opacity-80 text-black flex justify-around py-2 md:hidden">
+              className="fixed bottom-0 left-0 w-full border-t bg-black text-white text-black flex justify-around py-2 md:hidden">
               <Link to="/#" className="flex flex-col items-center">
                   <LuHome className=" text-xl"/>
               </Link>
@@ -64,7 +65,7 @@ const NavBar = () => {
                   <LuSearch className=" text-xl"/>
               </Link>
               <Link onClick="/" className="flex flex-col items-center">
-                  <LuPlus className=" text-xl"/>
+                 <UploadPostModal/>
               </Link>
               <Link to="/notifications" className="flex flex-col items-center">
                   <LuMessageSquare className="text-xl"/>

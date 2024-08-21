@@ -8,23 +8,27 @@ import UserProfile from './pages/UserProfile';
 import Chat from './pages/Chat';
 import EditProfile from './pages/EditProfile';
 import Chatbox from './Components/Chatbox';
+import {io} from 'socket.io-client'
+import ProtectedRoute from "@/Components/ProtectedRoutes.jsx";
 
 function App() {
+
+  // const socket = io("http://localhost:5000/");
 
   return (
     <div>
       <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
       <Router>
+          <ProtectedRoute path='/' element={<LandingPage/>}/>
+          <ProtectedRoute path='/account/edit' element={<EditProfile/>} />
+          <ProtectedRoute path='/:username' element={<UserProfile/>}/>
+          <ProtectedRoute path= '/direct/t/:username' element={<Chat/>}/>
+          <ProtectedRoute path='/chat' element={<Chatbox/>}/>
         <Routes>
-          <Route path='/' element={<LandingPage/>}/>
           <Route path='/auth'>
             <Route path='login' element={ <Login/>}/>
             <Route path='signup' element={ <Signup/>}/> 
           </Route>
-          <Route path='/account/edit' element={<EditProfile/>} />     
-          <Route path='/:username' element={<UserProfile/>}/>
-          <Route path= '/direct/t/:username' element={<Chat/>}/>
-          <Route path='/chat' element={<Chatbox/>}/>
         </Routes>
       </Router>
       </ThemeProvider>
