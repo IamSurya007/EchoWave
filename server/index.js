@@ -9,6 +9,7 @@ import userRoutes from './routes/userRoutes.js'
 import postRoutes from './routes/postRoutes.js'
 import http from 'http'
 import { getUrl } from './controllers/getUrl.js';
+import {Server} from 'socket.io'
 
 dotenv.config()
 
@@ -18,6 +19,17 @@ app.use(cors({
   origin:'*',
   credentials:true,
 }))
+
+// const io = new Server(server,
+//   {cors:{
+//     origin: "*"
+//   }}
+// )
+
+// io.on( 'connection',socket=>{
+//     console.log('connected', socket.id)
+// })
+
 
 app.use(
   express.json({

@@ -5,14 +5,15 @@ import { Route, Routes } from 'react-router-dom'
 import {useEffect} from "react";
 
 const ProtectedRoute = ({ component: Component, ...rest  }) => {
-    const {user} = useAuthContext()
+    // const {user} = useAuthContext()
     const Navigate = useNavigate()
+    const user = localStorage.getItem('token')
 
     useEffect(() => {
-        if(user==null){
-            Navigate("auth/login")
+        if(!user){
+            Navigate('/auth/login')
         }
-    }, []);
+    }, [user]);
 
     return (
         <Routes>
