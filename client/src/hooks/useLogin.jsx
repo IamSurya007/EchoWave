@@ -37,6 +37,7 @@ export const useLogin = () => {
     }catch(err){
       if( err.response || err.response.status===401){
         setError(err.response.data.message)
+        setIsLoading(false)
       }
     }
   }

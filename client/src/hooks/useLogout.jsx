@@ -12,7 +12,7 @@ export const useLogout=()=>{
     
         //dispatch logout function
         dispatch({type: 'LOGOUT'})
-        navigate('auth/login')
+        navigate('/auth/login')
     }
     return {logout}
 }

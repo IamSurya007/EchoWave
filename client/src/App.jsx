@@ -19,12 +19,17 @@ function App() {
     <div>
       <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
       <Router>
-          <ProtectedRoute path='/' element={<LandingPage/>}/>
-          <ProtectedRoute path='/account/edit' element={<EditProfile/>} />
-          <ProtectedRoute path='/:username' element={<UserProfile/>}/>
-          <ProtectedRoute path= '/direct/t/:username' element={<Chat/>}/>
-          <ProtectedRoute path='/chat' element={<Chatbox/>}/>
+          {/*<ProtectedRoute path='/' element={<LandingPage/>}/>*/}
+          {/*<ProtectedRoute path='/account/edit' element={<EditProfile/>} />*/}
+          {/*<ProtectedRoute path='/:username' element={<UserProfile/>}/>*/}
+          {/*<ProtectedRoute path= '/direct/t/:username' element={<Chat/>}/>*/}
+          {/*<ProtectedRoute path='/chat' element={<Chatbox/>}/>*/}
         <Routes>
+            <Route path='/' element={<ProtectedRoute><LandingPage/></ProtectedRoute>}/>
+            <Route path='/account/edit' element={<ProtectedRoute><EditProfile/></ProtectedRoute>}/>
+            <Route path='/:username' element={<ProtectedRoute><UserProfile/></ProtectedRoute>}/>
+            <Route path='/direct/t/:username' element={<ProtectedRoute><Chat/></ProtectedRoute>}/>
+            <Route path='/chat' element={<ProtectedRoute><Chatbox/></ProtectedRoute>}/>
           <Route path='/auth'>
             <Route path='login' element={ <Login/>}/>
             <Route path='signup' element={ <Signup/>}/>
