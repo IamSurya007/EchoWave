@@ -16,7 +16,8 @@ export default function Signup() {
     name:'',
     file:'null'
   });
-  const {signup, isLoading, error} = useSignup()
+  const {signup, isLoading, error} = useSignup();
+  const [imagePreview, setImagePreview] = useState(null);
 
 
   const handleChange = async (e)=>{
@@ -31,6 +32,8 @@ export default function Signup() {
         ...prevData,
         [name]:value,
       }))}
+      const imageUrl = URL.createObjectURL(files[0]);
+        setImagePreview(imageUrl);
     }
 
   const handleSubmit = async (e) => {
@@ -48,7 +51,19 @@ export default function Signup() {
         <Input className="bg-white text-black" name="name" type="name"  value={formData.name} onChange={handleChange} placeholder="enter your Name"/>
         <Input className="bg-white text-black" name="email" type="email"  value={formData.email} onChange={handleChange} placeholder="enter the email"/>
         <Input className="bg-white text-black" name="password" type="password"   value={formData.password} onChange={handleChange} placeholder="enter the password" />
-      <Label htmlFor="picture" className=" hover:cursor-pointer text-black flex w-full max-w-sm items-center gap-1.5">User Icon: <GoPaperclip className=" text-md"/>  </Label>
+      <Label htmlFor="picture" className=" hover:cursor-pointer text-black flex w-full max-w-sm items-center gap-1.5">User Icon: 
+      {!imagePreview && 
+      <GoPaperclip className=" text-md"/>  
+      }
+      {imagePreview && (
+              <img
+                className=" border-b rounded-full size-10 object-cover border-black items-center "
+                src={imagePreview}
+                alt="imagePreview"
+              />
+            )}
+
+      </Label>
       <Input id="picture" name="image" className=" hidden" onChange={handleChange} type="file" accept="image/*" />
 
     {error && <div className=" pl-2 text-red-500 font-bold">{error}</div>}

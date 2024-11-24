@@ -1,6 +1,7 @@
 import User from "../models/User.js";
 import Post from "../models/Post.js";
 import { uploadFile } from "../s3.js";
+import jwt from 'jsonwebtoken'
 
 const fetchUser = async (req, res) => {
     const {username} = req.body;
@@ -83,3 +84,16 @@ export const unfollowUser = async(req, res)=>{
 }
 
 export default fetchUser; 
+
+
+export const fetchFollowers = async (req, res) =>{
+    const token = req.headers.authorization && req.headers.authorization.split(' ')[1];
+    try{
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const currentUser = await User.findById(decoded._id);
+        const followers = await User.find({_id: {$in: currentUser.followers}})
+        res.json({followers});
+    } catch(error) {
+        res.json('error');
+    }
+}

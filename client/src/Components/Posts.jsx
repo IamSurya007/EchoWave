@@ -19,7 +19,7 @@ const Posts = () => {
       }
       setIsLoading(true)
       try{
-        const res = await axios.get('/post', {
+        const res = await axios.get('/post/getposts', {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },

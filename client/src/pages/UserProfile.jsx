@@ -17,6 +17,7 @@ import {
   AlertDialogTrigger,
 } from "@/Components/ui/alert-dialog";
 import SettingsModal from "@/modals/SettingsModal";
+import FollowersModal from "@/modals/FollowersModal";
 
 
 const UserProfile = () => {
@@ -43,7 +44,11 @@ const UserProfile = () => {
         setProfile(res.data.user);
         setPosts(res.data.posts);
         setIsLoading(false)
-        console.log("response", res.data);
+        const followers = await axios.get('/user/fetchfollowers',{
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        })
       } catch (err) {
         console.log(err);
       }
@@ -51,11 +56,9 @@ const UserProfile = () => {
     fetchUser();
   }, [username]);
   const isCurrentUser = profile?._id === user?._id;
-  console.log(isCurrentUser, profile, user);
   useEffect(() => {
     if (profile?.followers?.includes(user?._id)) {
       setIsFollowing(true);
-      console.log("following");
     } else {
       setIsFollowing(false);
     }
@@ -73,7 +76,6 @@ const UserProfile = () => {
           },
         }
       );
-      console.log(res.data);
     } catch (e) {
       console.log(e);
     }
@@ -94,7 +96,6 @@ const UserProfile = () => {
           },
         }
       );
-      console.log(res.data);
     } catch (e) {
       console.log(e);
     }
@@ -177,7 +178,7 @@ const UserProfile = () => {
           </div>
           <div className=" mt-3 flex ml-4 sm:ml-10 gap-x-2 justify-center sm:gap-x-8 font-sans">
             <h1>{posts.length} posts</h1>
-            <h1>{profile?.followers?.length} followers</h1>
+            <h1>{profile?.followers?.length} <FollowersModal/></h1>
             <h1>{profile?.following?.length} following</h1>
           </div>
           <div className="ml-4 sm:ml-10 mt-3 font-semibold">{profile?.username}</div>

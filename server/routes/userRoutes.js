@@ -1,5 +1,5 @@
 import express from 'express';
-import fetchUser, { editProfile, followUser, unfollowUser } from '../controllers/userController.js';
+import fetchUser, { editProfile, fetchFollowers, followUser, unfollowUser } from '../controllers/userController.js';
 import verifyToken from '../middleware/authMiddleware.js';
 import { upload } from '../middleware/uploadMiddleware.js';
 
@@ -9,5 +9,6 @@ router.post('/:username', fetchUser);
 router.post('/:username/follow',verifyToken, followUser)
 router.post('/:username/unfollow',verifyToken, unfollowUser)
 router.post('/account/edit', verifyToken, upload.single("file"),  editProfile)
+router.get('/fetchfollowers', verifyToken, fetchFollowers);
 
 export default router;

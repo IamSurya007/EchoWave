@@ -3,6 +3,7 @@ import { uploadFile } from "../s3.js";
 import Post from "../models/Post.js";
 import User from "../models/User.js";
 import Comment from "../models/Comment.js";
+import jwt from 'jsonwebtoken'
 
 export const getPosts = async (req, res) => {
   const page = parseInt(req.query.page) || 1;
@@ -20,6 +21,28 @@ export const getPosts = async (req, res) => {
     res.status(500).json({ message: err.message }); 
   } 
 };
+
+
+export const getPostsFromFollowingUsers = async(req, res) =>{
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
+  const token = req.headers.authorization && req.headers.authorization.split(' ')[1]; 
+  try {
+    const decoded = jwt.verify(token , process.env.JWT_SECRET)
+    const currentUser = await User.findById(decoded._id);
+    const followingIds = currentUser.following;
+    const totalPosts = await Post.countDocuments();
+    const totalPages = Math.ceil(totalPosts / limit);
+    const posts = await Post.find({user: {$in: followingIds}})
+      .populate("user")
+      .sort({createdAt: -1} ) // Populate user field
+      .skip((page - 1) * limit) 
+      .limit(limit);
+    res.json({ fetchedPosts: posts, fetchedCurrentPage: page, fetchedTotalPages: totalPages });
+  } catch (err) {
+    res.status(500).json({ message: err.message }); 
+  } 
+}
 
 export const getPost = async (req, res) => {
   try {
