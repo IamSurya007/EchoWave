@@ -69,8 +69,7 @@ export const unfollowUser = async(req, res)=>{
             res.status(404).json({ message: 'user not found' });
         }
         //remove userToFollow in the following of user
-        await User.findByIdAndUpdate(user._id, {$pull:{following: userToUnfollow._id}}) 
-        console.log(user)
+        await User.findByIdAndUpdate(user._id, {$pull:{following: userToUnfollow._id}});
         
         //remove user in the followers of userToFollow
         await User.findByIdAndUpdate(userToUnfollow._id, {$pull:{followers: user._id}})
@@ -92,8 +91,30 @@ export const fetchFollowers = async (req, res) =>{
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         const currentUser = await User.findById(decoded._id);
         const followers = await User.find({_id: {$in: currentUser.followers}})
-        res.json({followers});
+        res.json(followers);
     } catch(error) {
         res.json('error');
     }
 }
+
+export const getUserFollowersByUserAccount = async (req, res) => {
+    const {userAccountId} = req.query;
+    try{
+        const userAccount = await User.findById(userAccountId);
+        const followers = await User.find({_id: {$in: userAccount.followers}});
+        res.json(followers);
+    } catch (error) {
+        res.json(error);
+    }
+}
+export const getUserFollowingByUserAccount = async (req, res) => {
+    const {userAccountId} = req.body;
+    try{
+        const userAccount = await User.findById(userAccountId);
+        const following = await User.find({_id: {$in: userAccount.following}});
+        res.json(following);
+    } catch (error) {
+        res.json(error);
+    }
+}
+

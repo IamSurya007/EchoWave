@@ -13,6 +13,7 @@ import axios from "@/utils/api.js";
 import { useRef, useState } from "react";
 import { GoPaperclip } from "react-icons/go";
 import { LuPlus } from "react-icons/lu";
+import {useAuthContext} from "@/hooks/UseAuthContext.jsx";
 
 export default function DialogDemo() {
   const [description, setDescription] = useState("");
@@ -21,6 +22,7 @@ export default function DialogDemo() {
   const inputRef = useRef(null);
   const [error, setError] = useState("")
   const [isLoading, setIsLoading] = useState(false)
+  const {user} = useAuthContext();
 
   const handleIconClick = () => {
     inputRef.current.click();
@@ -54,7 +56,12 @@ export default function DialogDemo() {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-      });
+      }, {
+        params: {
+          userAccountId: user?.user_account_id
+        }
+          }
+      );
       console.log(response.data.message);
       if (response.status === 201) {
         alert(response.data.message);
