@@ -108,7 +108,7 @@ export const getUserFollowersByUserAccount = async (req, res) => {
     }
 }
 export const getUserFollowingByUserAccount = async (req, res) => {
-    const {userAccountId} = req.body;
+    const {userAccountId} = req.query;
     try{
         const userAccount = await User.findById(userAccountId);
         const following = await User.find({_id: {$in: userAccount.following}});

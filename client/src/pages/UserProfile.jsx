@@ -19,6 +19,7 @@ import {
 import SettingsModal from "@/modals/SettingsModal";
 import FollowersModal from "@/modals/FollowersModal";
 import { use } from "react";
+import FollowingModal from "@/modals/FollowingModal";
 
 
 const UserProfile = () => {
@@ -174,10 +175,12 @@ const UserProfile = () => {
           </div>
           <div className=" mt-3 flex ml-4 sm:ml-10 gap-x-2 justify-center sm:gap-x-8 font-sans">
             <h1>{posts.length} posts</h1>
-            <h1 className=" flex gap-1">{profile?.followers?.length} <FollowersModal
+            <h1 className=" flex items-center gap-1">{profile?.followers?.length} <FollowersModal
             userAccount = {profile}
             /></h1>
-            <h1>{profile?.following?.length} following</h1>
+            <h1 className=" flex items-center gap-1">{profile?.following?.length} <FollowingModal
+            userAccount={profile}/>
+            </h1>
           </div>
           <div className="ml-4 sm:ml-10 mt-3 font-semibold">{profile?.username}</div>
           <div className="ml-4 sm:ml-10 mt-1 font-serif">{profile?.bio}</div>

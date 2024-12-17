@@ -17,6 +17,6 @@ router.post('/:username/unfollow', verifyToken, unfollowUser);
 router.post('/account/edit', verifyToken, upload.single("file"), editProfile);
 router.get('/fetchfollowers', verifyToken, fetchFollowers);
 router.get('/secured/followers/useraccount', verifyToken, getUserFollowersByUserAccount);
-router.get('/secured/follwing/useraccount', verifyToken, getUserFollowingByUserAccount);
+router.get('/secured/following/useraccount', verifyToken, getUserFollowingByUserAccount);
 
 export default router;
