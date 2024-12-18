@@ -17,7 +17,6 @@ const fetchUser = async (req, res) => {
 
 export const editProfile = async(req, res)=>{
     const {name, email, username} = req.body;
-    console.log(req.user, req.body)
     try{
         const user = await User.findById(req.user._id);
         if(!user){
@@ -25,7 +24,6 @@ export const editProfile = async(req, res)=>{
         }
         if(req.file){
             await uploadFile(req.file, user.name, "userIcons")
-            console.log(req.file.originalname)
             const userIcon = `https://${process.env.AWS_BUCKET_NAME_1}.s3.amazonaws.com/${user.name}/userIcons/${req.file.originalname}`
             req.body.userIcon = userIcon
         }
@@ -38,7 +36,6 @@ export const editProfile = async(req, res)=>{
 
 export const followUser = async(req, res)=>{
     const {username} = req.body
-    console.log(username)
     
     try{
         const user = await User.findById(req.user._id);
@@ -48,11 +45,9 @@ export const followUser = async(req, res)=>{
         }
         //add userToFollow in the following of user
         await User.findByIdAndUpdate(user._id, {$addToSet:{following: userToFollow._id}}) 
-        console.log(user)
         
         //add user in the followers of userToFollow
         await User.findByIdAndUpdate(userToFollow._id, {$addToSet:{followers: user._id}})
-        console.log(userToFollow)
 
     res.status(200).json({ message: 'followed successfully' });
     }catch(e){
@@ -73,7 +68,6 @@ export const unfollowUser = async(req, res)=>{
         
         //remove user in the followers of userToFollow
         await User.findByIdAndUpdate(userToUnfollow._id, {$pull:{followers: user._id}})
-        console.log(userToUnfollow)
         res.status(200).json({ message: 'unfollowed successfully' });
 
     }catch(e){

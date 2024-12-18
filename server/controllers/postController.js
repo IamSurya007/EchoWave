@@ -44,6 +44,7 @@ export const getPostsFromFollowingUsers = async(req, res) =>{
   } 
 }
 
+
 export const getPost = async (req, res) => {
   try {
     const post = await Post.findById(req.params.id).populate(
@@ -145,18 +146,33 @@ export const deletePost = async (req, res) => {
 
 export const getComments = async (req, res) => {
   try {
-    const post = req.body;
-    if (!post) {
-      res.status(404).json({ message: " post not found" });
+    const postId = req.params.postId;
+    if (!postId ) {
+      return res.status(400).json({ message: "Post ID is required" });
     }
-    const posts = await Post.findById(post._id).populate("comments");
+
+    // Fetch post and populate comments with user details
+    const posts = await Post.findById(postId).populate({
+      path: "comments",
+      populate: {
+        path: "user", // Assuming comments have a "user" field referencing the user model
+        select: "name userIcon", // Fetch only necessary fields
+      },
+    });
+
+
+    if (!posts) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+
     const comments = posts.comments;
-    // const comments = await Comment.find({ _id: { $in: commentIds } });
     res.status(200).json({ comments });
   } catch (err) {
-    res.status(404).json({ message: err.message });
+    console.error("Error fetching comments:", err);
+    res.status(500).json({ message: "Internal server error" });
   }
 };
+
 
 export const addComment = async (req, res) => {
   try {

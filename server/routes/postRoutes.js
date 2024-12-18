@@ -12,7 +12,7 @@ router.post('/', verifyToken, upload.single("file"), createPost)
 router.post('/:postsId/like', verifyToken, likePost)
 router.post('/:postsId/unlike', verifyToken, unlike)
 router.post('/:postsId/addcomment', verifyToken, addComment)
-router.post('/:postId/comments', getComments ) 
+router.get('/:postId/comments', getComments ) 
 
 
 export default router;
