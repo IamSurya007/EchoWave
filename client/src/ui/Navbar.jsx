@@ -57,14 +57,14 @@ const NavBar = () => {
               </div>
           )}
           <nav
-              className="fixed bottom-0 left-0 w-full border-t bg-black text-white text-black flex justify-around py-2 md:hidden">
+              className="fixed bottom-0 left-0 w-full border-t bg-black text-white flex justify-around py-2 md:hidden">
               <Link to="/#" className="flex flex-col items-center">
                   <LuHome className=" text-xl"/>
               </Link>
               <Link onClick={toggleSearch} className="flex flex-col items-center">
                   <LuSearch className=" text-xl"/>
               </Link>
-              <Link onClick="/" className="flex flex-col items-center">
+              <Link className="flex flex-col items-center">
                  <UploadPostModal/>
               </Link>
               <Link to="/notifications" className="flex flex-col items-center">

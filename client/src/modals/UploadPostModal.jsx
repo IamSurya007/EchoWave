@@ -12,7 +12,21 @@ const customStyles = {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center'
-    }
+    },
+    content: {
+        position: "relative",
+        top: "auto",
+        left: "auto",
+        right: "auto",
+        bottom: "auto",
+        margin: "0 auto",
+        width: "50vh", // Adjust width
+        height: "50%", // Adjust height
+        overflow: "hidden", // Ensure content stays within boundaries
+        padding: "10px", // Add padding for aesthetics
+        backgroundColor: "#333", // Background color for content
+        borderRadius: "10px", // Rounded corners
+      },
 }
 
 const UploadPostModal = () => {
@@ -26,7 +40,10 @@ const UploadPostModal = () => {
     const [isLoading, setIsLoading] = useState(false)
 
     const handleIconClick = () => {
-        inputRef.current.click();
+        console.log("first");
+        if (inputRef.current) {
+            inputRef.current.click(); // Triggers the file input
+        }
     };
 
     const handleChange = (e) => {
@@ -42,7 +59,8 @@ const UploadPostModal = () => {
         e.preventDefault();
         setIsLoading(true)
         try {
-            const { url } = await axios.get("/s3Url").then(res => res.data)
+            if(file) {
+                const { url } = await axios.get("/s3Url").then(res => res.data)
             await fetch(url, {
                 method: "PUT",
                 headers: {
@@ -50,9 +68,10 @@ const UploadPostModal = () => {
                 },
                 body: file
             })
-
             const imageUrl = url.split('?')[0]
             formData.append('imageUrl', imageUrl)
+        }
+
             const response = await axios.post("/post/", formData, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -80,6 +99,7 @@ const UploadPostModal = () => {
         <div>
             <button onClick={opeModal}><LuPlus /></button>
             <Modal
+                ariaHideApp={false} 
                 isOpen={modalIsOpen}
                 onRequestClose={closeModal}
                 style={customStyles}
@@ -89,10 +109,10 @@ const UploadPostModal = () => {
                     <div className="grid gap-4 py-4 ">
                         <div className=" flex items-center">
                             <Input
-                                id="name"
+                             onClick={() => console.log("clicked")}
+                                id="file"
                                 type="file"
                                 ref={inputRef}
-                                className=" hidden"
                                 onChange={handleChange}
                             />
                             {imagePreview && (
@@ -117,7 +137,7 @@ const UploadPostModal = () => {
                             />
                         </div>
                     </div>
-                    <div><Button className=" bg-blue-400" disabled={isLoading} onClick={handleSubmit} type="submit">
+                    <div className='flex justify-end content-center'><Button className=" bg-blue-400" disabled={isLoading} onClick={handleSubmit} type="submit">
                         Post
                     </Button></div>
                 </div>
