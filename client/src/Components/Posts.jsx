@@ -47,7 +47,7 @@ const Posts = () => {
   }, [currentPage])
   const handleScroll = () => {
     const { scrollHeight, scrollTop, clientHeight } = document.documentElement
-    if (scrollTop + clientHeight >= scrollHeight - 3) {
+    if (scrollTop + clientHeight >= scrollHeight - 5) {
       // if(currentPage<= totalPages){
       setCurrentPage(prevPage => prevPage + 1)
       // }
