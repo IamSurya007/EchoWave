@@ -11,6 +11,7 @@ export const getPosts = async (req, res) => {
   try {
     const totalPosts = await Post.countDocuments();
     const totalPages = Math.ceil(totalPosts / limit);
+    console.log(page)
     const posts = await Post.find()
       .populate("user")
       .sort({createdAt: -1} ) // Populate user field
@@ -24,7 +25,7 @@ export const getPosts = async (req, res) => {
 
 
 export const getPostsFromFollowingUsers = async(req, res) =>{
-  const page = parseInt(req.query.page) || 1;
+  const page = parseInt(req.query.page) || 0;
   const limit = parseInt(req.query.limit) || 10;
   const token = req.headers.authorization && req.headers.authorization.split(' ')[1]; 
   try {
@@ -36,7 +37,7 @@ export const getPostsFromFollowingUsers = async(req, res) =>{
     const posts = await Post.find({user: {$in: followingIds}})
       .populate("user")
       .sort({createdAt: -1} ) // Populate user field
-      .skip((page - 1) * limit) 
+      .skip((page) * limit) 
       .limit(limit);
     res.json({ fetchedPosts: posts, fetchedCurrentPage: page, fetchedTotalPages: totalPages });
   } catch (err) {

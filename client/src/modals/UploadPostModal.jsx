@@ -5,6 +5,7 @@ import axios from "@/utils/api.js";
 import { useRef, useState } from "react";
 import { GoPaperclip } from "react-icons/go";
 import { Button } from "@/Components/ui/button";
+import { HeartIcon } from 'lucide-react';
 
 Modal.setAppElement(document.getElementById('root'));
 const customStyles = {
@@ -20,12 +21,12 @@ const customStyles = {
         right: "auto",
         bottom: "auto",
         margin: "0 auto",
-        width: "50vh", // Adjust width
-        height: "50%", // Adjust height
-        overflow: "hidden", // Ensure content stays within boundaries
-        padding: "10px", // Add padding for aesthetics
-        backgroundColor: "#333", // Background color for content
-        borderRadius: "10px", // Rounded corners
+        width: "50vh", 
+        height: "50%",
+        overflow: "hidden", 
+        padding: "10px",
+        backgroundColor: "#333", 
+        borderRadius: "10px",
       },
 }
 
@@ -42,7 +43,7 @@ const UploadPostModal = () => {
     const handleIconClick = () => {
         console.log("first");
         if (inputRef.current) {
-            inputRef.current.click(); // Triggers the file input
+            inputRef.current.click();
         }
     };
 
@@ -52,6 +53,10 @@ const UploadPostModal = () => {
         const imageUrl = URL.createObjectURL(selectedFile);
         setImagePreview(imageUrl);
     };
+
+    const hardReload = ()=>{
+        window.location.reload();
+    }
 
     const formData = new FormData();
     formData.append("description", description);
@@ -81,7 +86,8 @@ const UploadPostModal = () => {
             if (response.status === 201) {
                 alert(response.data.message);
             }
-            setIsLoading(false)
+            setIsLoading(false);
+            hardReload();
         } catch (e) {
             if (e.response && e.response.status !== 200) {
                 setError(e.response.data.message);
@@ -109,15 +115,16 @@ const UploadPostModal = () => {
                     <div className="grid gap-4 py-4 ">
                         <div className=" flex items-center">
                             <Input
-                             onClick={() => console.log("clicked")}
+                             onClick={(e) => e.stopPropagation()}
                                 id="file"
                                 type="file"
+                                className="hidden"
                                 ref={inputRef}
                                 onChange={handleChange}
                             />
                             {imagePreview && (
                                 <img
-                                    className=" border-b max-h-[calc(3/4*90vh)] border-black items-center "
+                                    className=" border-b max-h-[calc(3/4*40vh)] border-black items-center "
                                     src={imagePreview}
                                     alt="imagePreview"
                                 />
