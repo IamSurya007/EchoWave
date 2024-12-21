@@ -64,7 +64,7 @@ const EditProfile = () => {
 
   return (
     <Layout>
-      <div className=" ml-[calc(1/4*90vw)] mt-6">
+      <div className=" sm:ml-[calc(1/4*90vw)] ml-10 mt-6">
         <span className=" font-semibold text-2xl ">Edit Profile</span>
         <div className=" mt-5 grid gap-2">
           <div className="flex items-end">
@@ -85,7 +85,7 @@ const EditProfile = () => {
           <div className=" mt-3 flex items-center">
             <Label className=" w-28">Username :</Label>
             <Input
-              className=" w-1/3 outline-none bg-inherit"
+              className="sm:w-1/3 w-1/2 outline-none bg-inherit"
               defaultValue={formData?.name}
               type="text"
               onChange={handleInp}
@@ -95,7 +95,7 @@ const EditProfile = () => {
           <div className=" flex items-center">
             <Label className=" w-28">Name :</Label>
             <Input
-              className=" w-1/3 outline-none bg-inherit"
+              className=" sm:w-1/3 w-1/2 outline-none bg-inherit"
               defaultValue={formData?.username}
               type="text"
               onChange={handleInp}
@@ -105,7 +105,7 @@ const EditProfile = () => {
           <div className=" flex items-center">
             <Label className=" w-28">Email :</Label>
             <Input
-              className=" w-1/3 outline-none bg-inherit"
+              className="sm:w-1/3 w-1/2 outline-none bg-inherit"
               type="email"
               defaultValue={formData?.email}
               onChange={handleInp}
@@ -115,7 +115,7 @@ const EditProfile = () => {
           <div className=" flex items-center">
             <Label className=" w-28">Bio :</Label>
             <textarea
-              className=" border pl-1 pt-1 w-1/3 max-h-full overflow-auto outline-none bg-inherit"
+              className=" border pl-1 pt-1 sm:w-1/3 w-1/2 max-h-full overflow-auto outline-none bg-inherit"
               defaultValue={formData?.bio}
               type="email"
               onChange={handleInp}

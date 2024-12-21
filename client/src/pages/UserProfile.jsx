@@ -100,8 +100,21 @@ const UserProfile = () => {
   return (
     <Layout>
 
-      {isLoading && <div className=" flex justify-center items-center">Loading...!!</div>}
-      <div className=" flex justify-center sm:items-center sm:mt-20">
+      {isLoading &&
+        <div className="sm:w-1/3 mx-auto">
+          <div>
+            <div className=" flex justify-center items-center animate-pulse gap-2 p-4">
+              <div className="h-20 w-20 rounded-full bg-slate-400"></div>
+              <div className="flex-1">
+                <div className="h-5 w-[40%] rounded-lg bg-slate-400 text-sm"></div>
+                <div className="h-5 mt-2 w-[70%] rounded-lg bg-slate-400 text-sm"></div>
+              </div>
+            </div>
+            <div className="h-64 w-full rounded-sm bg-slate-400 text-sm"></div>
+          </div>
+        </div>}
+      {!isLoading &&
+        <div className="flex justify-center sm:items-center sm:mt-20">
         <img
           src={profile?.userIcon}
           className=" size-24 md:size-28 sm:size-36 mt-6 rounded-full object-cover"
@@ -185,7 +198,7 @@ const UserProfile = () => {
           <div className="ml-4 sm:ml-10 mt-3 font-semibold">{profile?.username}</div>
           <div className="ml-4 sm:ml-10 mt-1 font-serif">{profile?.bio}</div>
         </div>
-      </div>
+      </div>}
       <div className=" sm:w-1/3 rounded-md mx-auto mt-10 grid ">
         {posts
           .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
