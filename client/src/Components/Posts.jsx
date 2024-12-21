@@ -8,7 +8,7 @@ const Posts = () => {
 
   const [posts, setPosts] = useState([])
   const [isLoading, setIsLoading] = useState(false)
-  const [currentPage, setCurrentPage] = useState(1)
+  const [currentPage, setCurrentPage] = useState(0)
   const [totalPages, setTotalPages] = useState(0)
   const [uniques, setUniques] = useState([]) 
   const [loaded, setLoaded] = useState(false)
@@ -25,7 +25,7 @@ const Posts = () => {
           },
           params:{
             page:currentPage,
-            limit:10
+            limit:6
           }
         })
         const {fetchedPosts, fetchedCurrentPage, fetchedTotalPages} = res.data
@@ -40,24 +40,23 @@ const Posts = () => {
         fetchedPosts.forEach(post => newUniques.add(post._id))
         setUniques(Array.from(newUniques))
       }catch(e){
-        console.log(e)
+        console.log(e);
       }
     }
     getPosts();
   },[currentPage])
-
   const handleScroll = ()=>{
     const {scrollHeight, scrollTop, clientHeight} = document.documentElement
-    if(scrollTop + clientHeight >= scrollHeight){
-      // if(currentPage<= totalPages){
-      //   setCurrentPage(prevPage=>prevPage+1)
-      // }
-      setCurrentPage(prevPage=>prevPage+1)
+    if(scrollTop + clientHeight >= scrollHeight-1){
+      if(currentPage<= totalPages){
+        setCurrentPage(prevPage=>prevPage+1)
+      }
     }
   };
   useEffect(()=>{
     window.addEventListener('scroll', handleScroll)
     return ()=>{
+      console.log('scrolled')
       window.removeEventListener('scroll', handleScroll)
     }
   },[])
