@@ -48,9 +48,9 @@ const Posts = () => {
   const handleScroll = ()=>{
     const {scrollHeight, scrollTop, clientHeight} = document.documentElement
     if(scrollTop + clientHeight >= scrollHeight-1){
-      if(currentPage<= totalPages){
+      // if(currentPage<= totalPages){
         setCurrentPage(prevPage=>prevPage+1)
-      }
+      // }
     }
   };
   useEffect(()=>{
