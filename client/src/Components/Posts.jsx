@@ -2,6 +2,7 @@ import PostCard from "../ui/PostCard";
 import { useEffect, useState } from "react";
 import axios from "@/utils/api.js";
 import InfiniteScroll from "react-infinite-scroll-component";
+import {Suggestions} from "@/Components/Suggestions.jsx";
 
 const Posts = () => {
   const [posts, setPosts] = useState([]); // All loaded posts
@@ -55,11 +56,6 @@ const Posts = () => {
             </div>
             <div className="h-64 w-full rounded-sm bg-slate-400 text-sm"></div>
           </div>
-        }
-        endMessage={
-          <p style={{ textAlign: "center" }}>
-            <b>No more posts to load</b>
-          </p>
         }
       >
         {posts

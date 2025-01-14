@@ -2,12 +2,13 @@ import express from 'express';
 import fetchUser, {
     editProfile,
     fetchFollowers,
-    followUser,
+    followUser, getSuggestedUsers,
     getUserFollowersByUserAccount, getUserFollowingByUserAccount,
     unfollowUser
 } from '../controllers/userController.js';
 import verifyToken from '../middleware/authMiddleware.js';
 import {upload} from '../middleware/uploadMiddleware.js';
+import User from "../models/User.js";
 
 const router = express.Router();
 
@@ -18,5 +19,7 @@ router.post('/account/edit', verifyToken, upload.single("file"), editProfile);
 router.get('/fetchfollowers', verifyToken, fetchFollowers);
 router.get('/secured/followers/useraccount', verifyToken, getUserFollowersByUserAccount);
 router.get('/secured/following/useraccount', verifyToken, getUserFollowingByUserAccount);
+router.get('/secured/suggestedusers', verifyToken, getSuggestedUsers);
+router.get("/update-image-links",verifyToken,  updateAllUserImages)
 
 export default router;
