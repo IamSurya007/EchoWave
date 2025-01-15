@@ -4,7 +4,7 @@ import fetchUser, {
     fetchFollowers,
     followUser, getSuggestedUsers,
     getUserFollowersByUserAccount, getUserFollowingByUserAccount,
-    unfollowUser
+    unfollowUser, updateAllUserImages
 } from '../controllers/userController.js';
 import verifyToken from '../middleware/authMiddleware.js';
 import {upload} from '../middleware/uploadMiddleware.js';
