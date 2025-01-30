@@ -8,6 +8,7 @@ export const Suggestions = () => {
 
     const [suggestedUsers, setSuggestedUsers] = useState([]);
     const [currentPage, setCurrentPage] = useState(0);
+    const navigate = useNavigate();
 
     const getSuggestedUsers = async () => {
         try {
@@ -52,7 +53,7 @@ export const Suggestions = () => {
                                     alt="profile"
                                 />
                                 <label className="text-lg">{user.name || 'surya'}</label>
-                                <button className="border border-gray-700 bg-transparent rounded-s p-1 px-2">
+                                <button onClick={navigate(`/${user.name}`)} className="border border-gray-700 bg-transparent rounded-s p-1 px-2">
                                     View Profile
                                 </button>
                             </div>
