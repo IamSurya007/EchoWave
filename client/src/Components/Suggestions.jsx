@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react'
 import axios from "@/utils/api.js";
 import {IoClose} from "react-icons/io5";
 import profile from '../assets/profile.jpg'
+import { Link, useNavigate } from 'react-router-dom';
 
 
 export const Suggestions = () => {
@@ -27,6 +28,11 @@ export const Suggestions = () => {
         }
     }
 
+    const goto = (route) =>{
+        console.log(route)
+        navigate(`/${route}`);
+    }
+
     useEffect(() => {
         getSuggestedUsers();
     }, []);
@@ -36,7 +42,7 @@ export const Suggestions = () => {
                 <span className="mb-4">People you might know</span>
                 <div
                     className="overflow-x-auto overflow-y-hidden scroll-smooth whitespace-nowrap w-full"
-                    style={{scrollbarWidth: 'thin'}}
+                    style={{scrollbarWidth: 'none'}}
                 >
                     {suggestedUsers?.map((user) => (
                         <div
@@ -53,9 +59,9 @@ export const Suggestions = () => {
                                     alt="profile"
                                 />
                                 <label className="text-lg">{user.name || 'surya'}</label>
-                                <button onClick={navigate(`/${user.name}`)} className="border border-gray-700 bg-transparent rounded-s p-1 px-2">
+                                <Link to={`/${user.name}`} className="border border-gray-700 bg-transparent rounded-s p-1 px-2">
                                     View Profile
-                                </button>
+                                </Link>
                             </div>
                         </div>
                     ))}
