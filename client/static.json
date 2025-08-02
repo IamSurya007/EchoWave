@@ -1,0 +1,10 @@
+{
+  "headers": {
+    "/**": {
+      "Access-Control-Allow-Origin": "*"
+    }
+  },
+  "redirects": [
+    { "source": "/**", "destination": "/index.html", "statusCode": 200 }
+  ]
+}
