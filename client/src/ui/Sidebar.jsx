@@ -12,7 +12,7 @@ import { ModeToggle } from "../Components/mode-toggle";
 import { Link } from "react-router-dom";
 import DialogDemo from "./DialogMemo";
 import logo from '../assets/logo.png'
-import Typed from 'typed.js'
+
 
 const Sidebar = () => {
   const { logout } = useLogout();

@@ -15,6 +15,18 @@ const fetchUser = async (req, res) => {
     }
 };
 
+export const getUser = async (req, res) => {
+    const {userId} = req.params;
+    console.log(userId)
+    try {
+        const user = await User.findById(userId);
+        res.json({user});
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({message: 'Server error'});
+    }
+};
+
 export const editProfile = async (req, res) => {
     const {name, email, username} = req.body;
     try {

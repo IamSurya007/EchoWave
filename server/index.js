@@ -9,11 +9,15 @@ import userRoutes from './routes/userRoutes.js'
 import postRoutes from './routes/postRoutes.js'
 import http from 'http'
 import { getUrl } from './controllers/getUrl.js';
-import {Server} from 'socket.io'
-import swaggerUi from 'swagger-ui-express'
-import swaggerJsdoc from 'swagger-jsdoc';
+import {Server} from 'socket.io';
+import authSocketMiddleware from './middleware/authSOcketMiddleware.js';
+import { log } from 'console';
+import Message from './models/Message.js'
+import messageRoutes from "./routes/messageRoutes.js";
 
 dotenv.config()
+
+const userSocketMap = new Map();
 
 const app = express();
 const server = http.createServer(app)
@@ -22,31 +26,44 @@ app.use(cors({
   credentials:true,
 }))
 
-const options = {
-  definition: {
-    openapi: '3.0.0',
-    info: {
-      title: 'Your API Title',
-      version: '1.0.0',
-    },
-  },
-  apis: ['./routes/*.js'],
-};
-
-const swaggerSpec = swaggerJsdoc(options);
-
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+const io = new Server(server,
+  {cors:{
+    origin: "http://localhost:5173"
+  }}
+)
 
 
-// const io = new Server(server,
-//   {cors:{
-//     origin: "*"
-//   }}
-// )
+io.use(authSocketMiddleware);
 
-// io.on( 'connection',socket=>{
-//     console.log('connected', socket.id)
-// })
+io.on('connection',socket=>{
+  userSocketMap.set(socket.userId, socket.id);
+
+    socket.on('chat_message', async ({to, message}) => {
+        try {
+            const newMessage = new Message({
+                from: socket.userId,
+                to: to,
+                message,
+            })
+
+            await newMessage.save();
+        } catch (err) {
+            console.log('Error saving message', err)
+        }
+        const targetSocketId = userSocketMap.get(to);
+        if (targetSocketId) {
+            io.to(targetSocketId).emit('chat_message', {
+                from: socket.userId,
+                message
+            });
+        }
+    })
+
+    socket.on('disconnet', ()=>{
+      userSocketMap.delete(socket.userId);
+      console.log(`${socket.userId} disconnected`)
+    });
+})
 
 
 app.use(
@@ -68,10 +85,14 @@ app.use('/auth', authRoutes)
 app.use('/search', searchRoutes)
 app.use('/user', userRoutes)
 app.use('/post', postRoutes)
+app.use('/messages', messageRoutes)
+
+
+  
 
 mongoose.connect(process.env.MONGODB_URI)
 .then(() => {
-    // listen for requests
+  // listen for requests
     const PORT=process.env.PORT || 5000
     server.listen(PORT, () => {
       console.log(`connected to db & listening on port ${PORT}`);
