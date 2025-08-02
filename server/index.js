@@ -42,7 +42,10 @@ io.use(authSocketMiddleware);
 io.on('connection', socket => {
     userSocketMap.set(socket.userId, socket.id);
 
+    console.log(`${socket.id} conneected`, JSON.stringify(socket));
+
     socket.on('chat_message', async ({to, message}) => {
+        console.log('message received', to, message)
         try {
             const newMessage = new Message({
                 from: socket.userId,

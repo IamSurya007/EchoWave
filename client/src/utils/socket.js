@@ -5,7 +5,7 @@ const localUrl = 'http://localhost:5000';
 
 
 const token = localStorage.getItem('token');
-const socket = io(localUrl, {
+const socket = io(baseURL, {
     auth: {
         token: `Bearer ${token}`
     }
