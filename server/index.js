@@ -8,10 +8,9 @@ import searchRoutes from './routes/searchRoutes.js'
 import userRoutes from './routes/userRoutes.js'
 import postRoutes from './routes/postRoutes.js'
 import http from 'http'
-import { getUrl } from './controllers/getUrl.js';
+import {getUrl} from './controllers/getUrl.js';
 import {Server} from 'socket.io';
-import authSocketMiddleware from './middleware/authSOcketMiddleware.js';
-import { log } from 'console';
+import authSocketMiddleware from './middleware/authSocketMiddleware.js';
 import Message from './models/Message.js'
 import messageRoutes from "./routes/messageRoutes.js";
 
@@ -22,21 +21,23 @@ const userSocketMap = new Map();
 const app = express();
 const server = http.createServer(app)
 app.use(cors({
-  origin:'*',
-  credentials:true,
+    origin: '*',
+    credentials: true,
 }))
 
 const io = new Server(server,
-  {cors:{
-    origin: "http://localhost:5173"
-  }}
+    {
+        cors: {
+            origin: "http://localhost:5173"
+        }
+    }
 )
 
 
 io.use(authSocketMiddleware);
 
-io.on('connection',socket=>{
-  userSocketMap.set(socket.userId, socket.id);
+io.on('connection', socket => {
+    userSocketMap.set(socket.userId, socket.id);
 
     socket.on('chat_message', async ({to, message}) => {
         try {
@@ -59,24 +60,24 @@ io.on('connection',socket=>{
         }
     })
 
-    socket.on('disconnet', ()=>{
-      userSocketMap.delete(socket.userId);
-      console.log(`${socket.userId} disconnected`)
+    socket.on('disconnet', () => {
+        userSocketMap.delete(socket.userId);
+        console.log(`${socket.userId} disconnected`)
     });
 })
 
 
 app.use(
-  express.json({
-    limit: '150mb'
-  })
+    express.json({
+        limit: '150mb'
+    })
 )
 
 app.use(
-  express.urlencoded({
-    extended: true,
-    limit: '150mb'
-  })
+    express.urlencoded({
+        extended: true,
+        limit: '150mb'
+    })
 )
 
 app.use(bodyParser.json())
@@ -88,16 +89,14 @@ app.use('/post', postRoutes)
 app.use('/messages', messageRoutes)
 
 
-  
-
 mongoose.connect(process.env.MONGODB_URI)
-.then(() => {
-  // listen for requests
-    const PORT=process.env.PORT || 5000
-    server.listen(PORT, () => {
-      console.log(`connected to db & listening on port ${PORT}`);
+    .then(() => {
+        // listen for requests
+        const PORT = process.env.PORT || 5000
+        server.listen(PORT, () => {
+            console.log(`connected to db & listening on port ${PORT}`);
+        })
     })
-  })
-  .catch((error) => {
-    console.log(error)
-  })
+    .catch((error) => {
+        console.log(error)
+    })
