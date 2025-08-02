@@ -25,13 +25,16 @@ app.use(cors({
     credentials: true,
 }))
 
-const io = new Server(server,
-    {
-        cors: {
-            origin: "http://localhost:5173"
-        }
+const io = new Server(server, {
+    cors: {
+        origin: [
+            "http://localhost:5173",
+            "https://echowave-8by4.onrender.com"
+        ],
+        methods: ["GET", "POST"],
+        credentials: true
     }
-)
+});
 
 
 io.use(authSocketMiddleware);
