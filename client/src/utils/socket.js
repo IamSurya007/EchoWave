@@ -1,6 +1,6 @@
 import io from 'socket.io-client'
 
-const baseURL = "https://echo-wave.vercel.app/";
+const baseURL = "https://echowave-wxbu.onrender.com";
 const localUrl = 'http://localhost:5000';
 
 
